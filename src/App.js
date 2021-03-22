@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Game from "./components/Game";
@@ -8,14 +8,10 @@ import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 
 export default function App() {
-  const [contactAllowed, setContactAllowed] = useState(true);
   const topButtonRef = useRef();
 
   useEffect(() => {
     AOS.init({ duration: 500 });
-    const queryParams = new URLSearchParams(window.location.search);
-    const allowed = queryParams.get("ctt");
-    setContactAllowed(!allowed);
   }, []);
 
   useEffect(() => {
@@ -44,13 +40,11 @@ export default function App() {
       </button>
       <div className="top-container">
         <Header />
-        <Game contact={contactAllowed} />
+        <Game />
       </div>
       <Profile />
       <Projects />
-        {
-        contactAllowed ? <Contact /> : null
-        }
+      <Contact />
     </>
   );
 }

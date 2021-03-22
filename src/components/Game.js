@@ -11,7 +11,7 @@ import TouchButton from "./TouchButton";
 
 let canChangeBackground = true;
 
-function Game({contact}) {
+function Game() {
   const userRef = useRef();
   const projectsRef = useRef();
   const contactRef = useRef();
@@ -96,7 +96,6 @@ function Game({contact}) {
             onClick={goToSection}
           />
         </div>
-    {contact ?
         <div ref={contactRef} className="block">
           <img
             loading="lazy"
@@ -107,8 +106,6 @@ function Game({contact}) {
             onClick={goToSection}
           />
         </div>
-    : null
-    }
         <div className="block">
           <img
             loading="lazy"
