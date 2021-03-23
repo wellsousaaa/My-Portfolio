@@ -109,7 +109,6 @@ export default function Player({ blocks, darkMode }) {
           }, 40);
           break;
         case "ArrowUp":
-          console.log(jumpInterval);
           if (jumpInterval === null) {
             jump();
           }
@@ -131,7 +130,6 @@ export default function Player({ blocks, darkMode }) {
   };
 
   const seethis = (state) => {
-    console.log(state);
     if (state.y < -100) {
       clearInterval(jumpInterval);
       setTimeout(() => {
