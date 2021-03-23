@@ -14,7 +14,7 @@ export default function App() {
   useEffect(() => {
     AOS.init({ duration: 500 });
     const queryParams = new URLSearchParams(window.location.search);
-    const allowed = queryParams.get("contact");
+    const allowed = queryParams.get("ctt");
     setContactAllowed(!allowed);
   }, []);
 
