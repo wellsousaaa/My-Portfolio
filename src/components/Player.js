@@ -152,7 +152,7 @@ export default function Player({ blocks, darkMode }) {
     const player = playerRef.current.getBoundingClientRect();
     const block1 = blocks[0].current.getBoundingClientRect();
     const block2 = blocks[1].current.getBoundingClientRect();
-    const block3 = blocks[2].current.getBoundingClientRect();
+    if(blocks[2]) const block3 = blocks[2].current.getBoundingClientRect();
     const block4 = blocks[3].current.getBoundingClientRect();
 
     const changeLocation = (local) => {
@@ -163,7 +163,7 @@ export default function Player({ blocks, darkMode }) {
     if (checkCollision(player, block4)) darkMode();
     else if (checkCollision(player, block1)) changeLocation("profile");
     else if (checkCollision(player, block2)) changeLocation("projects");
-    else if (checkCollision(player, block3)) changeLocation("contact");
+    else if (block3) if (checkCollision(player, block3)) changeLocation("contact");
   }, [position.y]);
 
   const { x, y } = position;
