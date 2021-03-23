@@ -48,7 +48,6 @@ export default function Player({ blocks, darkMode }) {
   const jump = () => {
     setAnimation(jumping);
     jumpInterval = setInterval(() => {
-      console.log("a");
       setPosition((state) => seethis(state));
     }, 15);
   };
@@ -152,7 +151,7 @@ export default function Player({ blocks, darkMode }) {
     const player = playerRef.current.getBoundingClientRect();
     const block1 = blocks[0].current.getBoundingClientRect();
     const block2 = blocks[1].current.getBoundingClientRect();
-    if(blocks[2]) const block3 = blocks[2].current.getBoundingClientRect();
+    if(blocks[2].current) const block3 = blocks[2].current.getBoundingClientRect();
     const block4 = blocks[3].current.getBoundingClientRect();
 
     const changeLocation = (local) => {
