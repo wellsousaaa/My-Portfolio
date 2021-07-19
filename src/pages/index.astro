@@ -1,0 +1,31 @@
+---
+import Header from '../components/Header.astro';
+import Profile from '../components/Profile.astro';
+import Projects from '../components/Projects.astro';
+import Contact from '../components/Contact.astro';
+---
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Esse é o meu Portfólio! Aqui você pode ver detalhes sobre mim e meus projetos."
+    />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" type="text/css" href="/styles/index.css" />
+    <link rel="stylesheet" type="text/css" href="/styles/Scrollbar.css" />
+    
+    <title>Wendell de Sousa - Portfólio</title>
+  </head>
+  <body>
+    <!-- <Header /> -->
+    <Header client:load />
+    <Profile client:idle />
+    <Projects client:visible />
+    <Contact client:visible />
+  </body>
+</html>
