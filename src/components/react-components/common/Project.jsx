@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function Project({
-  img,
+  imgSrc,
   title,
   description,
   git,
@@ -19,9 +19,9 @@ export default function Project({
         justifyContent: "space-around",
       }}
       className={"project"}
-      // data-aos={inverted ? "fade-left" : "fade-right"}
+      data-aos={inverted ? "fade-left" : "fade-right"}
     >
-      <img loading="lazy" src={img} />
+      <img loading="lazy" src={imgSrc} />
       <div style={{ textAlign: inverted ? "right" : "left", maxWidth: "70%" }}>
         <i style={{ textAlign: inverted ? "right" : "left" }}>{title}</i>
         <p style={{ marginBottom: 10 }}>{description}</p>
@@ -64,6 +64,7 @@ export default function Project({
         >
           {tech.map((t) => (
             <div
+              key={t}
               style={{
                 margin: inverted ? "auto 0 auto 15px" : "auto 15px auto 0",
               }}

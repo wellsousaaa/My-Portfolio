@@ -55,7 +55,7 @@ function Carousel({ children }){
           <div className="carousel-item">{children[index]}</div>
           <div className="indexes">
             {children.map((c, i) => {
-              return <div className={`index ${i === index ? "i-active" : ""}`} />;
+              return <div key={i} className={`index ${i === index ? "i-active" : ""}`} />;
             })}
           </div>
         </div>

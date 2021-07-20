@@ -2,8 +2,6 @@ import React from 'react';
 import Game from './Game.jsx';
 import Photo from "/assets/photo.jpg";
 
-// const Photo = null;
-
 const Header = () => {
   return (
     <div className="top-container">

@@ -1,6 +1,9 @@
 import "/styles/Contact.css";
 import React, { useState } from "react";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {
   AiOutlineLinkedin,
   AiOutlineFacebook,
@@ -9,51 +12,56 @@ import {
 } from "react-icons/ai";
 import { FaTelegramPlane } from "react-icons/fa";
 
-export default function Contact() {
-  const [messageBox, setMessageBox] = useState({
-    message: null,
-    color: null,
-    display: false,
-    loading: false,
-  });
+const HALF_HOUR = 1800000;
+
+export default function Contact({urls}) {
+  const [loading, setLoading] = useState(false);
 
   const handleStatus = (state) => {
     const message =
       state === "ERROR"
-        ? "Não foi possivel enviar o seu email. Tente novamente mais tarde por favor. :("
-        : "Seu email foi enviado com sucesso. Muito obrigado pela interação! :D";
+        ? "😥 Não foi possivel enviar o seu email. Tente novamente mais tarde por favor..."
+        : "😁 Seu email foi enviado com sucesso. Muito obrigado pela interação! ";
 
     const color =
       state === "ERROR" ? "rgba(244, 67, 54, 0.75)" : "rgba(31, 197, 31, 0.75)";
 
-    setMessageBox({
-      message,
-      color,
-      display: true,
-      loading: false,
-    });
+    setLoading(false)
+
+    if(state === "ERROR") toast.error(message);
+    else toast.success(message)
   };
 
   const submitForm = (ev) => {
     ev.preventDefault();
-    if (document.contactForm.length !== 5) return;
+
+    const lastDate = localStorage.getItem("form_date");
+    const newDate =(new Date()).getTime();
+
+    if(lastDate && newDate - lastDate < HALF_HOUR) {
+      return toast.error("🕓 Você já enviou uma mensagem recentemente, aguarde mais tarde...");
+    }
+
+    localStorage.setItem("form_date", newDate);
+
+    if (document.contactForm.length !== 5) return toast.error("Aconteceu um erro! 😳");
 
     for (let i = 0; i < document.contactForm.length - 1; i++) {
       console.dir(document.contactForm[i].value);
       if (document.contactForm[i].value.trim(" ") === "") {
         document.contactForm[i].focus();
-        return;
+        return toast.error("👀 Preencha todos os campos corretamente...");
       }
 
       if (document.contactForm[3].value.length < 20) {
         document.contactForm[3].focus();
         document.contactForm[3].style.border = "1px solid red";
-        return;
+        return toast.error("Essa mensagem é muito curta! Tente enviar outra...");
       }
     }
 
     if (document.contactForm === "")
-      setMessageBox((m) => ({ ...m, display: false, loading: true }));
+      setLoading(true);
     const form = ev.target;
     const data = new FormData(form);
     const xhr = new XMLHttpRequest();
@@ -71,32 +79,23 @@ export default function Contact() {
     xhr.send(data);
   };
 
-  const { display, message, color, loading } = messageBox;
-
   return (
     <>
       
-      <div
-        className={`alert`}
-        style={{
-          backgroundColor: color,
-          transition: "all 200ms",
-          opacity: display ? 1 : 0,
-          visibility: display ? "visible" : "hidden",
-          marginTop: display ? 0 : 25,
-        }}
-      >
-        <span
-          className="closebtn"
-          onClick={() => {
-            setMessageBox({ ...messageBox, display: false });
-          }}
-        >
-          &times;
-        </span>
-        {message}
-      </div>
-        <div className="c-col">
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+
+          style={{ minWidth: "50vw", width: "fit-content", textAlign: "center" }} 
+        />
+        <div className="c-col" style={{margin: "auto"}}>
           <p id="contact" className="title" style={{ margin: "10px auto" }}>
             &#126; Contato &#126;
           </p>
@@ -132,7 +131,7 @@ export default function Contact() {
           </form>
           <div className="flex social-container">
             <a
-              href="https://www.facebook.com/wendell.sousa.75/"
+              href={urls[0]}
               target="_blank"
               className="flex social-icon facebook"
             >
@@ -140,7 +139,7 @@ export default function Contact() {
               <p>Facebook</p>
             </a>
             <a
-              href="https://www.instagram.com/well.png/?hl=pt-br"
+              href={urls[1]}
               target="_blank"
               className="flex social-icon instagram"
             >
@@ -148,7 +147,7 @@ export default function Contact() {
               <p>Instagram</p>
             </a>
             <a
-              href="https://github.com/wellsousaaa"
+              href={urls[2]}
               target="_blank"
               className="flex social-icon github"
             >
@@ -156,7 +155,7 @@ export default function Contact() {
               <p>Github</p>
             </a>
             <a
-              href="https://www.linkedin.com/in/wendellsousaaa/"
+              href={urls[3]}
               target="_blank"
               className="flex social-icon linkedin"
             >
@@ -164,7 +163,7 @@ export default function Contact() {
               <p>Linkedin</p>
             </a>
             <a
-              href="https://t.me/wellsousaaa"
+              href={urls[4]}
               target="_blank"
               className="flex social-icon telegram"
             >

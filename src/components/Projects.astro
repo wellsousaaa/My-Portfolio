@@ -1,6 +1,9 @@
 ---
-import Carousel from './react-components/common/Carousel.jsx';
-import Projects from './react-components/sections/Projects.jsx';
+    import Carousel from './react-components/common/Carousel.jsx';
+    import Projects from './react-components/sections/Projects.jsx';
+    
+    
+    const projects = JSON.parse(import.meta.env.SNOWPACK_PUBLIC_PROJECTS);
 ---
 
 <section>
@@ -8,6 +11,6 @@ import Projects from './react-components/sections/Projects.jsx';
         &#126; Alguns de meus projetos &#126;
     </p>
 
-    <Carousel />
-    <Projects />
+    <Carousel client:visible />
+    <Projects projects={projects} client:idle />
 </section>
