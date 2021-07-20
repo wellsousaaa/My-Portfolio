@@ -45,7 +45,7 @@
   height: 215px;
   filter: brightness(1.1) saturate(1.1) blur(0);
 
-  background-image: url("../media/floor.png");
+  background-image: url("/assets/floor.png");
   background-size: 1024.5px 35%;
   background-repeat: repeat-x;
   background-position: bottom;

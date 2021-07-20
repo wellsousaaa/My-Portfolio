@@ -7,6 +7,7 @@
     "build": "astro build"
   },
   "devDependencies": {
+    "@snowpack/plugin-dotenv": "^2.1.0",
     "astro": "^0.17.2"
   }
 }

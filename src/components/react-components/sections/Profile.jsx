@@ -15,6 +15,7 @@ const Gallery = ({ children }) => {
           {children.map((c, i) => {
             return (
               <div
+                key={i}
                 style={{
                   transform: `rotateY(${
                     (360 / children.length) * i || 0

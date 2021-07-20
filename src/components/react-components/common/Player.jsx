@@ -48,7 +48,6 @@ export default function Player({ blocks, darkMode }) {
   const jump = () => {
     setAnimation(jumping);
     jumpInterval = setInterval(() => {
-      console.log("a");
       setPosition((state) => seethis(state));
     }, 15);
   };
@@ -110,7 +109,6 @@ export default function Player({ blocks, darkMode }) {
           }, 40);
           break;
         case "ArrowUp":
-          console.log(jumpInterval);
           if (jumpInterval === null) {
             jump();
           }
@@ -122,7 +120,6 @@ export default function Player({ blocks, darkMode }) {
   };
 
   const checkCollision = (rect1, rect2) => {
-    // console.log(rect1, rect2);
     return !(
       rect1.right - 50 < rect2.left - 50 ||
       rect1.left - 50 > rect2.right - 50 ||
@@ -132,7 +129,6 @@ export default function Player({ blocks, darkMode }) {
   };
 
   const seethis = (state) => {
-    console.log(state);
     if (state.y < -100) {
       clearInterval(jumpInterval);
       setTimeout(() => {

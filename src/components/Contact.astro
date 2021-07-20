@@ -1,7 +1,9 @@
 ---
     import Contact from './react-components/sections/Contact.jsx';
+
+    const urls = JSON.parse(import.meta.env.SNOWPACK_PUBLIC_SOCIAL_MEDIAS);
 ---
     
       <section className="contact-container">
-        <Contact />
+        <Contact urls={urls} client:visible />
       </section>

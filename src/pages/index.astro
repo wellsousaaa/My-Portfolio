@@ -3,6 +3,8 @@ import Header from '../components/Header.astro';
 import Profile from '../components/Profile.astro';
 import Projects from '../components/Projects.astro';
 import Contact from '../components/Contact.astro';
+
+import App from '../components/index.jsx';
 ---
 <html lang="pt-BR">
   <head>
@@ -23,9 +25,11 @@ import Contact from '../components/Contact.astro';
   </head>
   <body>
     <!-- <Header /> -->
-    <Header client:load />
-    <Profile client:idle />
-    <Projects client:visible />
-    <Contact client:visible />
+    <App client:load />
+
+    <Header  />
+    <Profile />
+    <Projects />
+    <Contact />
   </body>
 </html>
