@@ -6,6 +6,10 @@
     "start": "astro dev",
     "build": "astro build"
   },
+  "dependencies": {
+    "aos": "^2.3.4",
+    "react-toastify": "^7.0.4"
+  },
   "devDependencies": {
     "@snowpack/plugin-dotenv": "^2.1.0",
     "astro": "^0.17.2"
