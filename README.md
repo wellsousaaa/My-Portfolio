@@ -7,7 +7,7 @@ Hello I'm Wendell and really love programming, I'm glad that you come to see my 
 Olá, eu sou Wendell e amo programar, que bom que você veio ver meus projetos aqui no github, fique a vontade para visitar meu portfólio e me chamar dar feedback ou só conversar ;D
 
 ## TECHS
-~ Link: [https://wendelldesousa.netlify.app(https://wendelldesousa.netlify.app/)
+~ Link: [https://wendelldesousa.netlify.app](https://wendelldesousa.netlify.app/)
 
 I like javascript and all it's frameworks. With React, Next and Node my projects can become reality and with my knowledge I want to realize yours too!
 
