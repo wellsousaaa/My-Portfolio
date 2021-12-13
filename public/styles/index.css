@@ -85,7 +85,7 @@ code {
 }
 
 .top-container {
-  background-image: url("/assets/game-background.webp");
+  background-image: url("/assets/background.png");
   background-size: auto 100%;
   image-rendering: crisp-edges;
   image-rendering: pixelated;

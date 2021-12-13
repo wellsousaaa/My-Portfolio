@@ -1,5 +1,5 @@
 import "/styles/Contact.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,6 +16,12 @@ const HALF_HOUR = 1800000;
 
 export default function Contact({urls}) {
   const [loading, setLoading] = useState(false);
+  const [showContact, setShowContact] = useState(true);
+      
+  useEffect(() => {
+    if(window.location.search.includes("ctt")) setShowContact(false);
+  }
+  , []);
 
   const handleStatus = (state) => {
     const message =
@@ -42,7 +48,7 @@ export default function Contact({urls}) {
       return toast.error("🕓 Você já enviou uma mensagem recentemente, aguarde mais tarde...");
     }
 
-    localStorage.setItem("form_date", newDate);
+    
 
     if (document.contactForm.length !== 5) return toast.error("Aconteceu um erro! 😳");
 
@@ -72,12 +78,15 @@ export default function Contact({urls}) {
       if (xhr.status === 200) {
         form.reset();
         handleStatus("SUCESS");
+        localStorage.setItem("form_date", newDate);
       } else {
         handleStatus("ERROR");
       }
     };
     xhr.send(data);
   };
+
+  if(!showContact) return null;
 
   return (
     <>

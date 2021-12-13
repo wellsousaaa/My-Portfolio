@@ -1,5 +1,5 @@
 import "/styles/Game.css";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Player from "../common/Player.jsx";
 
 import Profile from "/assets/profile.png";
@@ -12,6 +12,7 @@ import TouchButton from "../common/TouchButton";
 let canChangeBackground = true;
 
 function Game() {
+  const [showContact, setShowContact] = useState(true);
   const userRef = useRef();
   const projectsRef = useRef();
   const contactRef = useRef();
@@ -20,6 +21,8 @@ function Game() {
   useEffect(
     () => () => {
       canChangeBackground = true;
+      console.log(window)
+      if(window.location.search.includes("ctt")) setShowContact(false);
     },
     []
   );
@@ -96,7 +99,8 @@ function Game() {
             onClick={goToSection}
           />
         </div>
-        <div ref={contactRef} className="block">
+        {
+          showContact && <div ref={contactRef} className="block">
           <img
             loading="lazy"
             alt="Contact"
@@ -106,6 +110,7 @@ function Game() {
             onClick={goToSection}
           />
         </div>
+        }
         <div className="block">
           <img
             loading="lazy"
