@@ -1,6 +1,6 @@
 import "../styles/Projects.css";
 import star from "../media/star.png";
-import fnafImage from "../media/FNAF.webp";
+import fnafImage from "../media/FNAF_WEB.webp";
 import ecommerceImage from "../media/ecommerce.webp";
 import kiddingImage from "../media/kidding.jpg";
 import dixitImage from "../media/dixit.jpg";
