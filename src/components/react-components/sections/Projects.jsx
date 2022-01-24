@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import "/styles/Projects.css";
 import star from "/assets/star.png";
-import fnafImage from "/assets/FNAF.webp";
+import fnafImage from "/assets/FNAF_WEB.webp";
 import ecommerceImage from "/assets/ecommerce.webp";
 import kiddingImage from "/assets/kidding.jpg";
 import dixitImage from "/assets/dixit.jpg";

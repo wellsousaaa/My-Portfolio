@@ -140,14 +140,6 @@ export default function Contact({urls}) {
           </form>
           <div className="flex social-container">
             <a
-              href={urls[0]}
-              target="_blank"
-              className="flex social-icon facebook"
-            >
-              <AiOutlineFacebook />
-              <p>Facebook</p>
-            </a>
-            <a
               href={urls[1]}
               target="_blank"
               className="flex social-icon instagram"
