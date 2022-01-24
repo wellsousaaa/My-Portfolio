@@ -5,7 +5,7 @@ let carouselInterval = null;
 export default function Main() {
   return (<Carousel>
           <div className="project-item">
-            <img loading="lazy" src="/assets/FNAF.webp" />
+            <img loading="lazy" src="/assets/FNAF_WEB.webp" />
             <div className="project-text">
               <h2>Five Nights At Freddy's Web</h2>
               <p>
