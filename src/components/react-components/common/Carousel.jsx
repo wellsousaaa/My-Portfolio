@@ -4,6 +4,30 @@ let carouselInterval = null;
 
 export default function Main() {
   return (<Carousel>
+    <div className="project-item">
+            <img loading="lazy" src="/assets/Voxely.webp" />
+            <div className="project-text">
+              <h2>Voxely — Voxel Art</h2>
+              <p>
+                Um web app que eu fiz para que qualquer um possa construir voxel art, compartilhar com seus amigos e visualizar em realidade aumentada! <br/> Com integração TWA o aplicativo está disponível na play store! <br /> <br/> 
+                <a
+                  target="_blank"
+                  style={{ color: "inherit", marginLeft: 30 }}
+                  href="https://five-nights-at-freddys.herokuapp.com/"
+                >
+                 Play Store
+                </a>
+                <br/>
+                <a
+                  target="_blank"
+                  style={{ color: "inherit" }}
+                  href="https://five-nights-at-freddys.herokuapp.com/"
+                >
+                 https://voxely.netlify.app/
+                </a>
+              </p>
+            </div>
+          </div>
           <div className="project-item">
             <img loading="lazy" src="/assets/FNAF_WEB.webp" />
             <div className="project-text">

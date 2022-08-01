@@ -1,21 +1,21 @@
----
 import Gallery from "./react-components/sections/Profile.jsx";
----
 
-
-<section class="profile-container">
-    <img
+export default function Profile() {
+  return (
+    <section class="profile-container">
+      <img
         class="first-star"
         alt="Estrela"
         loading="lazy"
         src="/assets/star.png"
-        style="width: 50px; position: absolute; margin: -25px auto auto auto; image-rendering: pixelated;"
-    />
-    <div
-      id="profile"
-      class="f-col"
-      style="margin: 75px auto auto auto;"
-    >
+        style={{
+          width: "50px",
+          position: "absolute",
+          margin: "-25px auto auto auto",
+          imageRendering: "pixelated",
+        }}
+      />
+      <div id="profile" class="f-col" style={{ margin: "75px auto auto auto" }}>
         <h1> Javascript Developer &#38; Designer </h1>
         <img loading="lazy" class="my-photo" src="/assets/my_photo.jpg" />
         <h2>Olá, eu sou Wendell. Tudo bem?</h2>
@@ -28,29 +28,51 @@ import Gallery from "./react-components/sections/Profile.jsx";
           busca de novos desafios e disposto a aprimorar meus conhecimentos!
         </p>
 
-        <div style="display: flex; justify-content: space-evenly; align-items: center; flex-wrap: wrap-reverse; width: 100%">
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-evenly",
+            alignItems: "center",
+            flexWrap: "wrap-reverse",
+            width: "100%",
+          }}
+        >
           <img
             loading="lazy"
             class="wendell-programming"
-            style="height: 225px; margin-top: 25px; image-rendering: pixelated;"
+            style={{
+              height: "225px",
+              marginTop: "25px",
+              imageRendering: "pixelated",
+            }}
             src="/assets/programming.webp"
             alt="Eu programando..."
           />
-          <div style="margin-top: 40px">
-            
-        <Gallery client:idle />
+          <div style={{ marginTop: 40 }}>
+            <Gallery />
 
             <div
-              style="margin: auto; display: flex; align-items: center; justify-content: space-evenly; text-align: justify; max-width: 90%;"
+              style={{
+                margin: "auto",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-evenly",
+                textAlign: "justify",
+                maxWidth: "90%",
+              }}
             >
               <img
                 loading="lazy"
-                style="width: 100px; border-radius: 10px; margin-right: 25px;"
+                style={{
+                  width: "100px",
+                  borderRadius: "10px",
+                  marginRight: "25px",
+                }}
                 src="/assets/sass.jpg"
                 alt="Sass"
               />
 
-              <i style="max-width: 400px">
+              <i style={{ maxWidth: 400 }}>
                 SASS são Folhas de Estilo com Sintaxe Espetacular. Com Sass é
                 possível criar estilizações incríveis para as páginas de uma
                 maneira moderna.
@@ -61,8 +83,14 @@ import Gallery from "./react-components/sections/Profile.jsx";
         <img
           loading="lazy"
           src="/assets/star.png"
-          style="width: 50px; margin: 25px auto; image-rendering: pixelated;"
+          style={{
+            width: "50px",
+            margin: "25px auto",
+            imageRendering: "pixelated",
+          }}
           alt="Estrela"
         />
       </div>
-</section>
+    </section>
+  );
+}

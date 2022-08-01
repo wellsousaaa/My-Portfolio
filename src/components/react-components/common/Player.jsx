@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import idle from "/assets/wendell2.webp";
-import walking from "/assets/wendell.webp";
-import jumping from "/assets/wendelljump.png";
 
 let walkingInterval = null;
 let jumpInterval = null;
 let pressed = {};
+
+
+const idle = "/assets/wendell2.webp";
+const walking = "/assets/wendell.webp";
+const jumping = "/assets/wendelljump.png";
 
 export default function Player({ blocks, darkMode }) {
   const playerRef = useRef();
@@ -144,6 +146,7 @@ export default function Player({ blocks, darkMode }) {
   };
 
   useEffect(() => {
+    if(typeof window === "undefined") return;
     if (position.y === 0) setAnimation(idle);
     const player = playerRef.current.getBoundingClientRect();
     const block1 = blocks[0].current.getBoundingClientRect();

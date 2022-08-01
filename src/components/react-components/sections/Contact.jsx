@@ -1,8 +1,6 @@
-import "/styles/Contact.css";
 import React, { useState, useEffect } from "react";
 
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import {
   AiOutlineLinkedin,
@@ -19,6 +17,7 @@ export default function Contact({urls}) {
   const [showContact, setShowContact] = useState(true);
       
   useEffect(() => {
+    if(typeof window === "undefined") return;
     if(window.location.search.includes("ctt")) setShowContact(false);
   }
   , []);
@@ -89,7 +88,7 @@ export default function Contact({urls}) {
   if(!showContact) return null;
 
   return (
-    <>
+    <section className="contact-container">
       
         <ToastContainer
           position="top-center"
@@ -173,6 +172,6 @@ export default function Contact({urls}) {
             </a>
           </div>
         </div>
-    </>
+    </section>
   );
 }

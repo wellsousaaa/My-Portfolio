@@ -1,11 +1,10 @@
-import "/styles/Game.css";
 import React, { useEffect, useRef, useState } from "react";
 import Player from "../common/Player.jsx";
 
-import Profile from "/assets/profile.png";
-import Projects from "/assets/projects.png";
-import Contact from "/assets/contact.png";
-import Plus from "/assets/plus.png";
+const Profile = "/assets/profile.png";
+const Projects = "/assets/projects.png";
+const Contact = "/assets/contact.png";
+const Plus = "/assets/plus.png";
 
 import TouchButton from "../common/TouchButton";
 
@@ -28,7 +27,7 @@ function Game() {
   );
 
   const goToSection = ({ target }) => {
-    if (!canChangeBackground) return;
+    if (!canChangeBackground || typeof window === "undefined") return;
     window.location.hash = "";
     window.location.hash = `${target.className}`;
     canChangeBackground = false;

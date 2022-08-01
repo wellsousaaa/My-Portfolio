@@ -1,11 +1,10 @@
 import React from 'react';
-import "/styles/Profile.css";
-import sassImage from "/assets/sass.jpg";
-import nodeImage from "/assets/node.jpg";
-import mysqlImage from "/assets/mysql.jpg";
-import htmlImage from "/assets/html.jpg";
-import mernImage from "/assets/mern.jpg";
-import reactImage from "/assets/react.jpg";
+const sassImage = "/assets/sass.jpg";
+const nodeImage = "/assets/node.jpg";
+const mysqlImage = "/assets/mysql.jpg";
+const htmlImage = "/assets/html.jpg";
+const mernImage = "/assets/mern.jpg";
+const reactImage = "/assets/react.jpg";
 
 const Gallery = ({ children }) => {
   return (
