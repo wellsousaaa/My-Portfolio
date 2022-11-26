@@ -5,7 +5,7 @@ import Projects from "../components/Projects";
 import { useEffect, useRef } from "react";
 
 const urls = [
-  "https://www.instagram.com/well.png/",
+  "https://www.instagram.com/wellsousaaa/",
   "https://github.com/wellsousaaa",
   "https://www.linkedin.com/in/wendellsousaaa/",
   "https://t.me/wellsousaaa",
@@ -39,9 +39,9 @@ export default function App() {
         style={{ display: "none" }}
         ref={topButtonRef}
         className="top-button"
-        // onClick={() => {
-        //   window.location.hash = window.location.hash == "" ? "#top" : "#";
-        // }}
+        onClick={() => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
       >
         &#8593;
       </button>

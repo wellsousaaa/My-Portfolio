@@ -139,32 +139,36 @@ export default function Contact({urls}) {
           </form>
           <div className="flex social-container">
             <a
-              href={urls[1]}
+              href={urls[0]}
               target="_blank"
+              rel="noopener noreferrer"
               className="flex social-icon instagram"
             >
               <AiOutlineInstagram />
               <p>Instagram</p>
             </a>
             <a
-              href={urls[2]}
+              href={urls[1]}
               target="_blank"
+              rel="noopener noreferrer"
               className="flex social-icon github"
             >
               <AiOutlineGithub />
               <p>Github</p>
             </a>
             <a
-              href={urls[3]}
+              href={urls[2]}
               target="_blank"
+              rel="noopener noreferrer"
               className="flex social-icon linkedin"
             >
               <AiOutlineLinkedin />
               <p>Linkedin</p>
             </a>
             <a
-              href={urls[4]}
+              href={urls[3]}
               target="_blank"
+              rel="noopener noreferrer"
               className="flex social-icon telegram"
             >
               <FaTelegramPlane />

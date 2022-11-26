@@ -59,6 +59,11 @@ function Game() {
         dark: "rgb(0, 24, 68)",
       },
       {
+        property: "--header-color",
+        light: "rgba(0, 88, 248, 0.7)",
+        dark: "rgba(0, 24, 68, 0.7)",
+      },
+      {
         property: "--tag-color",
         light: "rgba(99, 90, 129, 0.1)",
         dark: "rgba(99, 90, 129, 1)",

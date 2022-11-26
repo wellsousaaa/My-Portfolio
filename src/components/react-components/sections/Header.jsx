@@ -1,6 +1,6 @@
 import React from 'react';
 import Game from './Game.jsx';
-const Photo = "/assets/photo.jpg";
+const Photo = "/assets/well.png";
 
 const Header = () => {
   return (

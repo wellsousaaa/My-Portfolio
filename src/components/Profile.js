@@ -1,4 +1,5 @@
 import Gallery from "./react-components/sections/Profile.jsx";
+const photo = "/assets/photo.jpeg";
 
 export default function Profile() {
   return (
@@ -17,15 +18,15 @@ export default function Profile() {
       />
       <div id="profile" class="f-col" style={{ margin: "75px auto auto auto" }}>
         <h1> Javascript Developer &#38; Designer </h1>
-        <img loading="lazy" class="my-photo" src="/assets/my_photo.jpg" />
+        <img loading="lazy" class="my-photo" src={photo} />
         <h2>Olá, eu sou Wendell. Tudo bem?</h2>
         <p class="desc">
-          Desde que eu comecei a programar eu percebi que era algo que eu amava,
-          estudando Desenvolvimento de Sistemas eu sempre dou o meu melhor nos
-          projetos que faço porque sei que dedicação é uma parte importante de
-          um trabalho bem feito! Gosto de estudar sobre as tecnologias que
-          utilizo sempre lendo as documentações e me informando. Estou sempre em
-          busca de novos desafios e disposto a aprimorar meus conhecimentos!
+          Sou programador e freelancer, mas desde que eu comecei a programar eu
+          percebi que era algo que eu amava sempre dou o meu melhor nos projetos
+          que faço porque sei que dedicação é uma parte importante de um
+          trabalho bem feito! Gosto de estudar sobre as tecnologias que utilizo
+          sempre lendo as documentações e me informando. Estou sempre em busca
+          de novos desafios e disposto a aprimorar meus conhecimentos!
         </p>
 
         <div

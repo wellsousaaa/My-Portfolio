@@ -13,7 +13,7 @@ export default function Main() {
                 <a
                   target="_blank"
                   style={{ color: "inherit", marginLeft: 30 }}
-                  href="https://five-nights-at-freddys.herokuapp.com/"
+                  href="https://play.google.com/store/apps/details?id=app.voxely.twa"
                 >
                  Play Store
                 </a>
@@ -21,10 +21,23 @@ export default function Main() {
                 <a
                   target="_blank"
                   style={{ color: "inherit" }}
-                  href="https://five-nights-at-freddys.herokuapp.com/"
+                  href="https://voxely.netlify.app"
                 >
                  https://voxely.netlify.app/
                 </a>
+              </p>
+            </div>
+          </div>
+          <div className="project-item">
+            <img loading="lazy" src="/assets/Medital.webp" />
+            <div className="project-text">
+              <h2>Medital - Encaminhamento Médico</h2>
+              <p>
+              Medital é uma plataforma de encaminhamento médico com base em dados oficiais disponibilizados no DATASUS. <br/> Direcionamos os pacientes para a unidade de saúde mais adequada com base na especialidade, distância e a gravidade do caso.
+              <br />
+              <br />
+              Confira funcionalidades de ChatBot e Pesquisa em <a href="https://medital.vercel.app">https://medital.vercel.app</a>
+            
               </p>
             </div>
           </div>
@@ -77,7 +90,7 @@ function Carousel({ children }){
     return (
         <div className="carousel-container">
           <div className="carousel-item">{children[index]}</div>
-          <div className="indexes">
+          <div className="indexes" style={{marginTop: 10}}>
             {children.map((c, i) => {
               return <div key={i} className={`index ${i === index ? "i-active" : ""}`} />;
             })}
