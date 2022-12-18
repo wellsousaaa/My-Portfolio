@@ -1,40 +1,18 @@
-# Welcome to [Astro](https://astro.build)
+![My Portfolio](portfolio.gif)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+# ~ My Portfolio ⭐
 
-## 🚀 Project Structure
+Hello I'm Wendell and really love programming, I'm glad that you come to see my projects here on github, feel free to visit my Portfolio and to contact me to give feedback or just to talk ;D
 
-Inside of your Astro project, you'll see the following folders and files:
+Olá, eu sou Wendell e amo programar, que bom que você veio ver meus projetos aqui no github, fique a vontade para visitar meu portfólio e me chamar dar feedback ou só conversar ;D
 
-```
-/
-├── public/
-│   ├── robots.txt
-│   └── favicon.ico
-├── src/
-│   ├── components/
-│   │   └── Tour.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## TECHS
+~ Link: [https://wendelldesousa.netlify.app](https://wendelldesousa.netlify.app/)
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+I like javascript and all it's frameworks. With React, Next and Node my projects can become reality and with my knowledge I want to realize yours too!
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Eu gosto de Javascript e suas frameworks. Com React, Next e Node meu projetos se tornam realidade e com meus conhecimentos quero realizar os seus também!
 
-Any static assets, like images, can be placed in the `public/` directory.
+This project was made by [Wendell Sousa](https://github.com/wellsousaaa/) using ReactJS and [Astro](https://astro.build/) 🚀 
 
-## 🧞 Commands
 
-All commands are run from the root of the project, from a terminal:
-
-| Command         | Action                                      |
-|:----------------|:--------------------------------------------|
-| `npm install`   | Installs dependencies                       |
-| `npm run start` | Starts local dev server at `localhost:3000` |
-| `npm run build` | Build your production site to `./dist/`     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://github.com/snowpackjs/astro) or jump into our [Discord server](https://astro.build/chat).
