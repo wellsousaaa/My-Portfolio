@@ -16,7 +16,7 @@ export default function Project({
       style={{
         flexDirection: inverted ? "row-reverse" : "row",
         flexWrap: "wrap",
-        justifyContent: "space-around",
+        justifyContent: "space-evenly",
       }}
       className={"project"}
       data-aos={inverted ? "fade-left" : "fade-right"}

@@ -1,48 +1,91 @@
-import React, {useState, useEffect} from 'react';
-
-let carouselInterval = null;
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay } from "swiper";
 
 export default function Main() {
-  return (<Carousel>
-    <div className="project-item">
-            <img loading="lazy" src="/assets/Voxely.webp" />
+  return (
+    <div style={{ width: "95vw", margin: "auto" }}>
+      <Swiper
+        modules={[Navigation, Autoplay]}
+        autoplay={{ delay: 15000 }}
+        // spaceBetween={50}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
+      >
+        <SwiperSlide>
+          <div className="project-item">
+            <img
+              loading="lazy"
+              src="https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/Voxely.webp"
+            />
             <div className="project-text">
               <h2>Voxely — Voxel Art</h2>
               <p>
-                Um web app que eu fiz para que qualquer um possa construir voxel art, compartilhar com seus amigos e visualizar em realidade aumentada! <br/> Com integração TWA o aplicativo está disponível na play store! <br /> <br/> 
+                Um{" "}
                 <a
-                  target="_blank"
-                  style={{ color: "inherit", marginLeft: 30 }}
-                  href="https://play.google.com/store/apps/details?id=app.voxely.twa"
-                >
-                 Play Store
-                </a>
-                <br/>
-                <a
+                  rel="noreferrer"
                   target="_blank"
                   style={{ color: "inherit" }}
                   href="https://voxely.netlify.app"
                 >
-                 https://voxely.netlify.app/
+                  web app
+                </a>{" "}
+                que eu fiz para que qualquer um possa construir voxel art,
+                compartilhar com seus amigos e visualizar em realidade
+                aumentada! <br /> Com integração TWA o aplicativo está
+                disponível na{" "}
+                <a
+                  rel="noreferrer"
+                  target="_blank"
+                  style={{ color: "inherit" }}
+                  href="https://play.google.com/store/apps/details?id=app.voxely.twa"
+                >
+                  Play Store
                 </a>
+                !
               </p>
             </div>
           </div>
+        </SwiperSlide>
+        <SwiperSlide>
           <div className="project-item">
-            <img loading="lazy" src="/assets/Medital.webp" />
+            <img
+              loading="lazy"
+              src="https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/Medital.webp"
+            />
             <div className="project-text">
-              <h2>Medital - Encaminhamento Médico</h2>
+              <a
+                rel="noreferrer"
+                target="_blank"
+                style={{ color: "inherit", textDecoration: "none" }}
+                href="https://medital.vercel.app"
+              >
+                <h2>Medital - Encaminhamento Médico</h2>
+              </a>
+
               <p>
-              Medital é uma plataforma de encaminhamento médico com base em dados oficiais disponibilizados no DATASUS. <br/> Direcionamos os pacientes para a unidade de saúde mais adequada com base na especialidade, distância e a gravidade do caso.
-              <br />
-              <br />
-              Confira funcionalidades de ChatBot e Pesquisa em <a href="https://medital.vercel.app">https://medital.vercel.app</a>
-            
+                <a
+                  rel="noreferrer"
+                  target="_blank"
+                  style={{ color: "inherit" }}
+                  href="https://medital.vercel.app"
+                >
+                  Medital
+                </a>{" "}
+                é uma plataforma de encaminhamento médico com base em dados
+                oficiais disponibilizados no DATASUS. <br /> Direcionamos os
+                pacientes para a unidade de saúde mais adequada com base na
+                especialidade, distância e a gravidade do caso.
               </p>
             </div>
           </div>
+        </SwiperSlide>
+        <SwiperSlide>
           <div className="project-item">
-            <img loading="lazy" src="/assets/FNAF_WEB.webp" />
+            <img
+              loading="lazy"
+              src="https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/FNAF_WEB.webp"
+            />
             <div className="project-text">
               <h2>Five Nights At Freddy's Web</h2>
               <p>
@@ -59,8 +102,13 @@ export default function Main() {
               </p>
             </div>
           </div>
+        </SwiperSlide>
+        <SwiperSlide>
           <div className="project-item">
-            <img loading="lazy" src="/assets/ecommerce.webp" />
+            <img
+              loading="lazy"
+              src="https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/ecommerce.webp"
+            />
             <div className="project-text">
               <h2>E-commerce Completo</h2>
               <p>
@@ -69,33 +117,8 @@ export default function Main() {
               </p>
             </div>
           </div>
-        </Carousel>
-        )
+        </SwiperSlide>
+      </Swiper>
+    </div>
+  );
 }
-
-function Carousel({ children }){
-    const [index, setIndex] = useState(0);
-  
-    useEffect(() => {
-      carouselInterval = setInterval(() => {
-        setIndex((i) => (i === children.length - 1 ? 0 : i + 1));
-      }, 15000);
-  
-      return () => {
-        clearInterval(carouselInterval);
-        carouselInterval = null;
-      };
-    }, []);
-
-    return (
-        <div className="carousel-container">
-          <div className="carousel-item">{children[index]}</div>
-          <div className="indexes" style={{marginTop: 10}}>
-            {children.map((c, i) => {
-              return <div key={i} className={`index ${i === index ? "i-active" : ""}`} />;
-            })}
-          </div>
-        </div>
-      );
-    };
-    

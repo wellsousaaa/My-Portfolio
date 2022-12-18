@@ -87,7 +87,7 @@ code {
 }
 
 .top-container {
-  background-image: url("/assets/game-background.webp");
+  background-image: url("https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/game-background.webp");
   background-size: auto 100%;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
@@ -131,4 +131,10 @@ h2 {
   font-size: 18px; /* Increase font size */
   opacity: 0.7;
   animation: top-button 500ms;
+}
+
+@media screen and (max-width: 900px) {
+  div[class*="swiper-button"] {
+    display: none;
+  }
 }

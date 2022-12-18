@@ -66,7 +66,7 @@
 }
 
 .project-item p {
-  margin: 10px auto;
+  /* margin: 10px auto; */
   text-align: center;
 }
 
@@ -82,12 +82,12 @@
   color: unset;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  border-radius: 25px;
+  /* justify-content: space-evenly; */
+  border-radius: 0.5rem;
   width: 80%;
   margin: 25px auto;
   min-height: 200px;
-  background-color: rgba(74, 64, 104, 0.2);
+  background-image: linear-gradient(25deg, rgba(74, 64, 104, 0.25), rgba(74, 64, 104, 0.1));
 }
 
 .project a {

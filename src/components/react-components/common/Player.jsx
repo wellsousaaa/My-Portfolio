@@ -4,15 +4,9 @@ let walkingInterval = null;
 let jumpInterval = null;
 let pressed = {};
 
-
-const idle = "/assets/wendell2.webp";
-const walking = "/assets/wendell.webp";
-const jumping = "/assets/wendelljump.png";
-
 export default function Player({ blocks, darkMode }) {
   const playerRef = useRef();
-
-  const [animation, setAnimation] = useState(idle);
+  const [gameState, setGameState] = useState("idle");
   const [position, setPosition] = useState({
     x: 50,
     y: 0,
@@ -42,13 +36,13 @@ export default function Player({ blocks, darkMode }) {
 
     if (e.key === "ArrowUp") return;
 
-    setAnimation((animation) => (animation === jumping ? animation : idle));
+    setGameState((state) => (state === "jumping" ? state : "idle"));
     clearInterval(walkingInterval);
     walkingInterval = null;
   };
 
   const jump = () => {
-    setAnimation(jumping);
+    setGameState("jumping");
     jumpInterval = setInterval(() => {
       setPosition((state) => seethis(state));
     }, 15);
@@ -89,9 +83,7 @@ export default function Player({ blocks, darkMode }) {
                 : { ...state, x: state.x + 10 }
             );
             setInverted(true);
-            setAnimation((animation) =>
-              animation === jumping ? animation : walking
-            );
+            setGameState((state) => (state === "jumping" ? state : "walking"));
           }, 40);
           break;
         case "ArrowLeft":
@@ -105,9 +97,7 @@ export default function Player({ blocks, darkMode }) {
             );
 
             setInverted(false);
-            setAnimation((animation) =>
-              animation === jumping ? animation : walking
-            );
+            setGameState((state) => (state === "jumping" ? state : "walking"));
           }, 40);
           break;
         case "ArrowUp":
@@ -147,7 +137,9 @@ export default function Player({ blocks, darkMode }) {
 
   useEffect(() => {
     if(typeof window === "undefined") return;
-    if (position.y === 0) setAnimation(idle);
+    if (position.y === 0) {
+      setGameState("idle");
+    };
     const player = playerRef.current.getBoundingClientRect();
     const block1 = blocks[0].current.getBoundingClientRect();
     const block2 = blocks[1].current.getBoundingClientRect();
@@ -168,8 +160,9 @@ export default function Player({ blocks, darkMode }) {
   const { x, y } = position;
   return (
     <div className="player">
-      <img
-        src={animation}
+      <div
+      data-state={gameState}
+        // src={animation}
         ref={playerRef}
         style={{
           imageRendering: "pixelated",

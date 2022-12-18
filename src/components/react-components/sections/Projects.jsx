@@ -5,17 +5,13 @@ const Project = dynamic(() => import("../common/Project.jsx"), {
 });
 
 const star = "/assets/star.png";
-const Voxely = "/assets/Voxely.webp";
-const fnafImage = "/assets/FNAF_WEB.webp";
-const ecommerceImage = "/assets/ecommerce.webp";
-const kiddingImage = "/assets/kidding.jpg";
 
 const images = {
-  Voxely,
-  Medital: "https://im5.ezgif.com/tmp/ezgif-5-602bfe156d.gif",
-  fnafImage,
-  ecommerceImage,
-  kiddingImage
+  Voxely : "https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/Voxely.webp",
+  Medital: "https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/Medital.webp",
+  fnafImage : "https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/FNAF_WEB.webp",
+  ecommerceImage: "https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/ecommerce.webp",
+  kiddingImage : "https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/kidding.jpg"
 }
 
 

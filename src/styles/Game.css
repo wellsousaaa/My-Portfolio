@@ -51,12 +51,50 @@
   background-position: bottom;
 }
 
-.player img {
+
+.player div {
+  width: 80px;
+  height: 152px;
   -webkit-filter: drop-shadow(2px 3px 0 white) drop-shadow(-3px -2px 0 white);
   filter: drop-shadow(3px 0px 0 var(--sprite-outline))
     drop-shadow(-3px 0px 0 var(--sprite-outline))
     drop-shadow(-0px -2px 0 var(--sprite-outline))
     /* drop-shadow(-0px 2px 0 var(--sprite-outline)); */;
+    background-size: auto calc(152px * 2);
+    background-image: url("/assets/well_sprites.webp");
+}
+
+.player div[data-state="idle"] {
+  animation: idle 2s steps(11) infinite;
+}
+
+.player div[data-state="walking"] {
+  animation: walking .5s steps(9) infinite;
+}
+
+.player div[data-state="jumping"] {
+  width: 80px;
+  background-position: 106px 0;
+}
+
+@keyframes idle {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: calc(81.73px * -11) 0;
+  }
+}
+
+@keyframes walking {
+  from {
+    background-position: 0 150px;
+  }
+
+  to {
+    background-position: calc(101.5px * -9) 150px;
+  }
 }
 
 @media screen and (max-width: 750px) {
