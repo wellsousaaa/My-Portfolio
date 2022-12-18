@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
 const Project = dynamic(() => import("../common/Project.jsx"), {
   ssr: false,
@@ -7,13 +7,17 @@ const Project = dynamic(() => import("../common/Project.jsx"), {
 const star = "/assets/star.png";
 
 const images = {
-  Voxely : "https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/Voxely.webp",
-  Medital: "https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/Medital.webp",
-  fnafImage : "https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/FNAF_WEB.webp",
-  ecommerceImage: "https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/ecommerce.webp",
-  kiddingImage : "https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/kidding.jpg"
-}
-
+  Voxely:
+    "https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/Voxely.webp",
+  Medital:
+    "https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/Medital.webp",
+  fnafImage:
+    "https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/FNAF_WEB.webp",
+  ecommerceImage:
+    "https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/ecommerce.webp",
+  kiddingImage:
+    "https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/kidding.jpg",
+};
 
 const projects = [
   {
@@ -21,18 +25,26 @@ const projects = [
     title: "Voxely — Build, Edit and Share!",
     url: "https://voxely.netlify.app",
     git: "https://play.google.com/store/apps/details?id=app.voxely.twa",
-    description: "Construa, explore, compartilhe e experimente suas criações de voxel art (pixels 3D) com realidade aumentada!",
-    tech: ["React.js", "PWA/TWA", "Three.js", "Firebase", "Realidade Aumentada"],
+    description:
+      "Construa, explore, compartilhe e experimente suas criações de voxel art (pixels 3D) com realidade aumentada!",
+    tech: [
+      "React.js",
+      "PWA/TWA",
+      "Three.js",
+      "Firebase",
+      "Realidade Aumentada",
+    ],
   },
   {
     title: "Medital - Encaminhamento Médico",
     img: "Medital",
     url: "https://medital.vercel.app",
     git: "https://medital.vercel.app",
-    description: "Medital é uma plataforma de encaminhamento médico que direciona os pacientes para a unidade de saúde mais adequada com base na especialidade, distância e a gravidade do caso.",
+    description:
+      "Medital é uma plataforma de encaminhamento médico que direciona os pacientes para a unidade de saúde mais adequada com base na especialidade, distância e a gravidade do caso. O site foi concorrente na Feira de Ciências e Engenharia de Guarulhos de 2022 (FECEG)",
     tech: ["React.js", "Next.js", "MongoDB", "API", "ChatBot"],
   },
- 
+
   {
     img: "fnafImage",
     title: "Five Nights at Freddy's Web",
@@ -63,29 +75,75 @@ const projects = [
 ];
 
 export default function Projects() {
-
   return (
-      <>
-        <div style={{ overflowX: "hidden" }} className="projects-list">
-          {/* <h2>Lista:</h2> */}
-          {projects.map((props, i) => {
-            return (
-              <Project key={props.title} imgSrc={images[props.img]} {...props} inverted={i % 2 === 1} />
-            );
-          })}
-        </div>
+    <>
+      <div style={{ overflowX: "hidden" }} className="projects-list">
+        {/* <h2>Lista:</h2> */}
+        {projects.map((props, i) => {
+          return (
+            <Project
+              key={props.title}
+              imgSrc={images[props.img]}
+              {...props}
+              inverted={i % 2 === 1}
+            />
+          );
+        })}
+      </div>
 
-        <div style={{ display: "flex", justifyContent: "center" }}>
+      <div className="companies">
+        <h2>Serviços realizados para:</h2>
+        <div className="companies-list">
           <img
             loading="lazy"
-            src={star}
-            style={{
-              width: 50,
-              margin: "25px auto",
-              imageRendering: "pixelated",
-            }}
+            draggable="false"
+            src="/assets/esphere.png"
+            alt="esphere"
+            title="Esphere"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          />
+          <img
+            loading="lazy"
+            draggable="false"
+            src="/assets/smart.png"
+            alt="smart"
+            title="Smart Control Pro"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
+          <img
+            loading="lazy"
+            draggable="false"
+            src="/assets/wisebets.png"
+            alt="wisebets"
+            title="WiseBets"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          />
+          <img
+            loading="lazy"
+            draggable="false"
+            src="/assets/rifa321.png"
+            alt="rifa321"
+            title="Rifa 321"
+            data-aos="fade-up"
+            data-aos-delay="400"
           />
         </div>
-      </>
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <img
+          loading="lazy"
+          src={star}
+          style={{
+            width: 50,
+            margin: "25px auto",
+            imageRendering: "pixelated",
+          }}
+        />
+      </div>
+    </>
   );
 }

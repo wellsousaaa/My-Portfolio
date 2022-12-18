@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default function Project({
   imgSrc,
@@ -10,13 +10,13 @@ export default function Project({
   inverted,
 }) {
   return (
-    <a
-      href={url}
-      target="_blank"
+    <div
+      onClick={() => window.open(url, "_blank", "noopener,noreferrer")}
       style={{
         flexDirection: inverted ? "row-reverse" : "row",
         flexWrap: "wrap",
         justifyContent: "space-evenly",
+        cursor: "pointer",
       }}
       className={"project"}
       data-aos={inverted ? "fade-left" : "fade-right"}
@@ -33,7 +33,6 @@ export default function Project({
             justifyContent: inverted ? "flex-end" : "flex-start ",
           }}
         >
-          
           <a
             target="_blank"
             style={{ wordWrap: "break-word", width: "100%" }}
@@ -64,6 +63,6 @@ export default function Project({
           ))}
         </div>
       </div>
-    </a>
+    </div>
   );
 }

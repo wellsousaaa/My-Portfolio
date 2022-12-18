@@ -40,6 +40,7 @@ export default function App() {
         ref={topButtonRef}
         className="top-button"
         onClick={() => {
+          window.location.hash = "";
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
       >

@@ -92,3 +92,31 @@
   border-radius: 5px;
   object-fit: cover;
 }
+
+table {
+  border-collapse: collapse;
+  margin: 0;
+}
+
+tr {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+td {
+  display: flex;
+  color: #28354d;
+  align-items: center;
+}
+
+tr td:first-child {
+  width: 150px;
+}
+
+.stars-container {
+  color: #84a1d6;
+}
+
+tr {
+  margin: 10px auto;
+}

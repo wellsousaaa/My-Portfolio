@@ -20,8 +20,7 @@ function Game() {
   useEffect(
     () => () => {
       canChangeBackground = true;
-      console.log(window)
-      if(window.location.search.includes("ctt")) setShowContact(false);
+      if (window.location.search.includes("ctt")) setShowContact(false);
     },
     []
   );
@@ -103,18 +102,18 @@ function Game() {
             onClick={goToSection}
           />
         </div>
-        {
-          showContact && <div ref={contactRef} className="block">
-          <img
-            loading="lazy"
-            alt="Contact"
-            title="Contact"
-            src={Contact}
-            className="contact"
-            onClick={goToSection}
-          />
-        </div>
-        }
+        {showContact && (
+          <div ref={contactRef} className="block">
+            <img
+              loading="lazy"
+              alt="Contact"
+              title="Contact"
+              src={Contact}
+              className="contact"
+              onClick={goToSection}
+            />
+          </div>
+        )}
         <div className="block">
           <img
             loading="lazy"

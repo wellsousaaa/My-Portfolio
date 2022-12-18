@@ -18,7 +18,7 @@ import { useEffect } from "react";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
-    AOS.init({ duration: 500 });
+    AOS.init({ duration: 500, once: true });
   }, []);
 
   return (

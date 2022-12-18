@@ -1,10 +1,11 @@
-import React from 'react';
+import React from "react";
 const sassImage = "/assets/sass.jpg";
 const nodeImage = "/assets/node.jpg";
 const mysqlImage = "/assets/mysql.jpg";
 const htmlImage = "/assets/html.jpg";
-const mernImage = "/assets/mern.jpg";
+const phpImage = "/assets/php.png";
 const reactImage = "/assets/react.jpg";
+const mongoImage = "/assets/mongo.png";
 
 const Gallery = ({ children }) => {
   return (
@@ -34,11 +35,13 @@ const Gallery = ({ children }) => {
 export default function Profile() {
   return (
     <Gallery>
-    <img loading="lazy" src={sassImage} className="gallery-item" />
-    <img loading="lazy" src={nodeImage} className="gallery-item" />
-    <img loading="lazy" src={reactImage} className="gallery-item" />
-    <img loading="lazy" src={mysqlImage} className="gallery-item" />
-    <img loading="lazy" src={htmlImage} className="gallery-item" />
-  </Gallery>
-  )
+      <img loading="lazy" src={sassImage} className="gallery-item" />
+      <img loading="lazy" src={nodeImage} className="gallery-item" />
+      <img loading="lazy" src={reactImage} className="gallery-item" />
+      <img loading="lazy" src={mysqlImage} className="gallery-item" />
+      <img loading="lazy" src={phpImage} className="gallery-item" />
+      <img loading="lazy" src={htmlImage} className="gallery-item" />
+      <img loading="lazy" src={mongoImage} className="gallery-item" />
+    </Gallery>
+  );
 }

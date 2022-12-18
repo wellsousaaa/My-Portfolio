@@ -155,3 +155,19 @@
     justify-content: center !important;
   }
 }
+
+.companies-list {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.companies-list img {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0,0,0,0.1);
+  filter: drop-shadow(0px 9px 7px rgba(114, 113, 113, 0.1));
+}

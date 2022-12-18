@@ -1,11 +1,40 @@
+import { AiFillStar } from "react-icons/ai";
 import Gallery from "./react-components/sections/Profile.jsx";
 const photo = "/assets/photo.jpeg";
 
+const stars = [
+  {
+    id: 1,
+    name: "React.js / Next.js",
+    stars: 5,
+  },
+  {
+    id: 2,
+    name: "Node.js",
+    stars: 5,
+  },
+  {
+    id: 3,
+    name: "MongoDB / Firebase",
+    stars: 5,
+  },
+  {
+    id: 4,
+    name: "MySQL / PostgreSQL",
+    stars: 4,
+  },
+  {
+    id: 5,
+    name: "PHP / Laravel",
+    stars: 4,
+  },
+];
+
 export default function Profile() {
   return (
-    <section class="profile-container">
+    <section className="profile-container">
       <img
-        class="first-star"
+        className="first-star"
         alt="Estrela"
         loading="lazy"
         src="/assets/star.png"
@@ -16,17 +45,24 @@ export default function Profile() {
           imageRendering: "pixelated",
         }}
       />
-      <div id="profile" class="f-col" style={{ margin: "75px auto auto auto" }}>
-        <h1> Javascript Developer &#38; Designer </h1>
-        <img loading="lazy" class="my-photo" src={photo} />
+      <div
+        id="profile"
+        className="f-col"
+        style={{ margin: "75px auto auto auto" }}
+      >
+        <h1> Full Stack Developer &#38; Digital Designer </h1>
+        <img loading="lazy" className="my-photo" src={photo} />
         <h2>Olá, eu sou Wendell. Tudo bem?</h2>
-        <p class="desc">
-          Sou programador e freelancer, mas desde que eu comecei a programar eu
-          percebi que era algo que eu amava sempre dou o meu melhor nos projetos
-          que faço porque sei que dedicação é uma parte importante de um
-          trabalho bem feito! Gosto de estudar sobre as tecnologias que utilizo
-          sempre lendo as documentações e me informando. Estou sempre em busca
-          de novos desafios e disposto a aprimorar meus conhecimentos!
+        <p className="desc">
+          Moro em São Paulo e sou programador e freelancer formado em
+          Desenvolvimento de Sistemas, desde que eu comecei a estudar
+          programação eu percebi que era algo que eu amava! <br /> <br />
+          Trabalho profissionalmente desde 2020, desenvolvendo aplicações, sites
+          e servidores como estagiário e freelancer. Sempre dou o meu melhor nos
+          projetos que faço porque sei que dedicação é uma parte importante de
+          um trabalho bem feito! Gosto de estudar sobre as tecnologias que
+          utilizo sempre lendo as documentações e me informando. Estou sempre em
+          busca de novos desafios e disposto a aprimorar meus conhecimentos!
         </p>
 
         <div
@@ -40,7 +76,7 @@ export default function Profile() {
         >
           <img
             loading="lazy"
-            class="wendell-programming"
+            className="wendell-programming"
             style={{
               height: "225px",
               marginTop: "25px",
@@ -62,22 +98,30 @@ export default function Profile() {
                 maxWidth: "90%",
               }}
             >
-              <img
-                loading="lazy"
-                style={{
-                  width: "100px",
-                  borderRadius: "10px",
-                  marginRight: "25px",
-                }}
-                src="/assets/sass.jpg"
-                alt="Sass"
-              />
-
-              <i style={{ maxWidth: 400 }}>
-                SASS são Folhas de Estilo com Sintaxe Espetacular. Com Sass é
-                possível criar estilizações incríveis para as páginas de uma
-                maneira moderna.
-              </i>
+              <table>
+                <tbody>
+                  {stars.map((i, ix) => (
+                    <tr
+                      key={i.id}
+                      data-aos="fade-up"
+                      data-aos-delay={`${ix * 2}00`}
+                    >
+                      <td>{i.name}</td>
+                      <td className="stars-container">
+                        {[...Array(i.stars)].map((_, idx) => (
+                          <span
+                            key={idx}
+                            data-aos="fade-up"
+                            data-aos-delay={`${idx * (ix + 1)}00`}
+                          >
+                            <AiFillStar />
+                          </span>
+                        ))}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

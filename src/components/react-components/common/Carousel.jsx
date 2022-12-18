@@ -75,7 +75,9 @@ export default function Main() {
                 é uma plataforma de encaminhamento médico com base em dados
                 oficiais disponibilizados no DATASUS. <br /> Direcionamos os
                 pacientes para a unidade de saúde mais adequada com base na
-                especialidade, distância e a gravidade do caso.
+                especialidade, distância e a gravidade do caso. O site foi
+                concorrente na Feira de Ciências e Engenharia de Guarulhos de
+                2022 {"(FECEG)"}
               </p>
             </div>
           </div>
