@@ -29,6 +29,16 @@
   text-align: justify;
 }
 
+@media screen and (max-width: 900px) {
+  .f-col .desc {
+    width: 90%;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+  }
+}
+
+
+
 .f-col .my-photo:hover {
   transition: transform 200ms;
   transform: scale(1.1);
