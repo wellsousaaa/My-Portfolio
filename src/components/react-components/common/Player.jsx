@@ -136,32 +136,32 @@ export default function Player({ blocks, darkMode }) {
   };
 
   useEffect(() => {
-    if(typeof window === "undefined") return;
+    if (typeof window === "undefined") return;
     if (position.y === 0) {
       setGameState("idle");
-    };
+    }
     const player = playerRef.current.getBoundingClientRect();
     const block1 = blocks[0].current.getBoundingClientRect();
     const block2 = blocks[1].current.getBoundingClientRect();
     const block3 = blocks[2].current.getBoundingClientRect();
-    const block4 = blocks[3].current.getBoundingClientRect();
+    // const block4 = blocks[3].current.getBoundingClientRect();
 
     const changeLocation = (local) => {
       if (window.location.hash === local) return;
       window.location.hash = local;
     };
 
-    if (checkCollision(player, block4)) darkMode();
+    if (checkCollision(player, block3)) darkMode();
     else if (checkCollision(player, block1)) changeLocation("profile");
     else if (checkCollision(player, block2)) changeLocation("projects");
-    else if (checkCollision(player, block3)) changeLocation("contact");
+    // else if (checkCollision(player, block3)) changeLocation("contact");
   }, [position.y]);
 
   const { x, y } = position;
   return (
     <div className="player">
       <div
-      data-state={gameState}
+        data-state={gameState}
         // src={animation}
         ref={playerRef}
         style={{

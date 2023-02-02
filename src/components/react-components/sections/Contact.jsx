@@ -85,6 +85,7 @@ export default function Contact({ urls }) {
     xhr.send(data);
   };
 
+  return null;
   if (!showContact) return null;
 
   return (

@@ -14,7 +14,7 @@ function Game() {
   const [showContact, setShowContact] = useState(true);
   const userRef = useRef();
   const projectsRef = useRef();
-  const contactRef = useRef();
+  // const contactRef = useRef();
   const darkModeRef = useRef();
 
   useEffect(
@@ -102,7 +102,7 @@ function Game() {
             onClick={goToSection}
           />
         </div>
-        {showContact && (
+        {/* {showContact && (
           <div ref={contactRef} className="block">
             <img
               loading="lazy"
@@ -113,7 +113,7 @@ function Game() {
               onClick={goToSection}
             />
           </div>
-        )}
+        )} */}
         <div className="block">
           <img
             loading="lazy"
@@ -129,7 +129,7 @@ function Game() {
 
       <Player
         darkMode={darkMode}
-        blocks={[userRef, projectsRef, contactRef, darkModeRef]}
+        blocks={[userRef, projectsRef, darkModeRef]}
       />
 
       <div
