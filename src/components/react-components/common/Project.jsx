@@ -21,7 +21,7 @@ export default function Project({
       className={"project"}
       data-aos={inverted ? "fade-left" : "fade-right"}
     >
-      <img loading="lazy" src={imgSrc} />
+      <img loading="lazy" src={imgSrc} alt={title} />
       <div style={{ textAlign: inverted ? "right" : "left", maxWidth: "70%" }}>
         <i style={{ textAlign: inverted ? "right" : "left" }}>{title}</i>
         <p style={{ marginBottom: 10 }}>{description}</p>

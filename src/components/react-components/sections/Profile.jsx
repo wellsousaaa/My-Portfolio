@@ -35,13 +35,48 @@ const Gallery = ({ children }) => {
 export default function Profile() {
   return (
     <Gallery>
-      <img loading="lazy" src={sassImage} className="gallery-item" />
-      <img loading="lazy" src={nodeImage} className="gallery-item" />
-      <img loading="lazy" src={reactImage} className="gallery-item" />
-      <img loading="lazy" src={mysqlImage} className="gallery-item" />
-      <img loading="lazy" src={phpImage} className="gallery-item" />
-      <img loading="lazy" src={htmlImage} className="gallery-item" />
-      <img loading="lazy" src={mongoImage} className="gallery-item" />
+      <img
+        alt="Sass Logo"
+        loading="lazy"
+        src={sassImage}
+        className="gallery-item"
+      />
+      <img
+        alt="Node Logo"
+        loading="lazy"
+        src={nodeImage}
+        className="gallery-item"
+      />
+      <img
+        alt="React Logo"
+        loading="lazy"
+        src={reactImage}
+        className="gallery-item"
+      />
+      <img
+        alt="MySQL Logo"
+        loading="lazy"
+        src={mysqlImage}
+        className="gallery-item"
+      />
+      <img
+        alt="PHP Logo"
+        loading="lazy"
+        src={phpImage}
+        className="gallery-item"
+      />
+      <img
+        alt="HTML Logo"
+        loading="lazy"
+        src={htmlImage}
+        className="gallery-item"
+      />
+      <img
+        alt="MongoDB Logo"
+        loading="lazy"
+        src={mongoImage}
+        className="gallery-item"
+      />
     </Gallery>
   );
 }

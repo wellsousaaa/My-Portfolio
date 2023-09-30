@@ -15,6 +15,7 @@ export default function Main() {
         <SwiperSlide>
           <div className="project-item">
             <img
+              alt="Voxely"
               loading="lazy"
               src="https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/Voxely.webp"
             />
@@ -50,6 +51,7 @@ export default function Main() {
         <SwiperSlide>
           <div className="project-item">
             <img
+              alt="Medital"
               loading="lazy"
               src="https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/Medital.webp"
             />
@@ -85,6 +87,7 @@ export default function Main() {
         <SwiperSlide>
           <div className="project-item">
             <img
+              alt="Fnaf Web"
               loading="lazy"
               src="https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/FNAF_WEB.webp"
             />
@@ -108,6 +111,7 @@ export default function Main() {
         <SwiperSlide>
           <div className="project-item">
             <img
+              alt="Store+"
               loading="lazy"
               src="https://raw.githubusercontent.com/wellsousaaa/My-Portfolio/main/public/assets/ecommerce.webp"
             />

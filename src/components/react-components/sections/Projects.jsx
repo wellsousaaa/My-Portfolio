@@ -97,7 +97,7 @@ export default function Projects() {
           <img
             loading="lazy"
             draggable="false"
-            src="/assets/esphere.png"
+            src="/assets/logos/esphere.webp"
             alt="esphere"
             title="Esphere"
             data-aos="fade-up"
@@ -106,7 +106,7 @@ export default function Projects() {
           <img
             loading="lazy"
             draggable="false"
-            src="/assets/smart.png"
+            src="/assets/logos/smart.webp"
             alt="smart"
             title="Smart Control Pro"
             data-aos="fade-up"
@@ -115,7 +115,7 @@ export default function Projects() {
           <img
             loading="lazy"
             draggable="false"
-            src="/assets/wisebets.png"
+            src="/assets/logos/wisebets.webp"
             alt="wisebets"
             title="WiseBets"
             data-aos="fade-up"
@@ -124,11 +124,29 @@ export default function Projects() {
           <img
             loading="lazy"
             draggable="false"
-            src="/assets/rifa321.png"
+            src="/assets/logos/rifa321.webp"
             alt="rifa321"
             title="Rifa 321"
             data-aos="fade-up"
             data-aos-delay="400"
+          />
+          <img
+            loading="lazy"
+            draggable="false"
+            src="/assets/logos/rifaclick.webp"
+            alt="RifaClick"
+            title="Rifa Click"
+            data-aos="fade-up"
+            data-aos-delay="500"
+          />
+          <img
+            loading="lazy"
+            draggable="false"
+            src="/assets/logos/menuflow.webp"
+            alt="Menuflow"
+            title="Menuflow"
+            data-aos="fade-up"
+            data-aos-delay="600"
           />
         </div>
       </div>
