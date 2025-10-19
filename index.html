@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Minimal Kaboom Platformer</title>
+    <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
+  </head>
+  <body>
+    <script>
+      // init kaboom and expose globals
+      kaboom({
+        global: true,
+        width: 640,
+        height: 480,
+        background: [92, 148, 252],
+      });
+
+      // set gravity
+      setGravity(1600);
+
+      // floor (static)
+      add([
+        rect(width(), 48),
+        pos(0, height() - 48),
+        area(),
+        body({ isStatic: true }),
+        color(127, 200, 255),
+      ]);
+
+      // question block (static)
+      add([
+        rect(32, 32),
+        pos(220, 300),
+        area(),
+        body({ isStatic: true }),
+        color(255, 215, 0),
+        "qblock", // tag
+      ]);
+
+      // player (dynamic)
+      const player = add([
+        rect(28, 28),
+        pos(80, 100),
+        area(),
+        body(),
+        color(30, 144, 255),
+        "player", // tag
+      ]);
+
+      // movement
+      onKeyDown("left", () => player.move(-200, 0));
+      onKeyDown("right", () => player.move(200, 0));
+      onKeyPress("space", () => {
+        if (player.isGrounded()) player.jump(600);
+      });
+
+      // ✅ correct collision method in v3000+
+      player.onCollide("qblock", (block) => {
+        console.log("Hit the question block!");
+        block.color = rgb(255, 100, 100);
+      });
+    </script>
+  </body>
+</html>
