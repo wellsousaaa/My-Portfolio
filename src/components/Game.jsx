@@ -1,55 +1,60 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Minimal Kaboom Platformer</title>
-    <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
-  </head>
-  <body>
-    <script>
-      // init kaboom and expose globals
+import { useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
+
+function Game() {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    async function init() {
+      const kaplay = (await import("kaplay")).default;
+
       const SCALE = 4;
-      kaboom({
+
+      const {
+        loadSprite,
+        add,
+        sprite,
+        pos,
+        setGravity,
+        rect,
+        area,
+        body,
+        color,
+        opacity,
+        outline,
+        rgb,
+        onKeyDown,
+        onKeyRelease,
+        onKeyPress,
+        onUpdate,
+        dt,
+        isKeyDown,
+        clamp,
+      } = kaplay({
         global: true,
         width: 174 * (window.innerWidth / SCALE / 174),
         height: 135,
-        // crisp: true,
+        crisp: true,
         scale: SCALE,
+        canvas: canvasRef.current,
       });
 
-      loadSprite("player", "public/assets/well_sprites_v2.webp", {
+      loadSprite("player", "/assets/well_sprites_v2.webp", {
         sliceX: 11, // número máximo de frames horizontais (idle tem 11)
-        sliceY: 2, // duas linhas (idle e walking)
+        sliceY: 2,
         anims: {
-          idle: { from: 0, to: 10, loop: true, speed: 6 }, // 11 frames
-          walking: { from: 11, to: 15, loop: true, speed: 12 }, // 9 frames
-          jumping: { from: 21, to: 21 }, // 1 frame
+          idle: { from: 0, to: 10, loop: true, speed: 6 },
+          walking: { from: 11, to: 15, loop: true, speed: 12 },
+          jumping: { from: 21, to: 21 },
         },
       });
 
-      loadSprite("button", "public/assets/plus.png");
-      loadSprite("background", "public/assets/game-background.webp");
+      loadSprite("button", "/assets/plus.png");
+      loadSprite("background", "/assets/game-background.webp");
 
       for (let i = 0; i < window.innerWidth / 2 / 174; i++) {
-        add([
-          sprite("background"),
-          // Make the background centered on the screen
-          pos(i * 174, 0),
-          // width(640),
-          // height(480),
-
-          // origin("center"),
-          // Allow the background to be scaled
-          // scale(2),
-          // Keep the background position fixed even when the camera moves
-          // fixed(),
-        ]);
+        add([sprite("background"), pos(i * 174, 0)]);
       }
-
-      // Scale the background to cover the screen
-      // background.scaleTo(
-      //   Math.max(width() / bgImage.tex.width, height() / bgImage.tex.height)
-      // );
 
       // set gravity
       setGravity(1200);
@@ -143,8 +148,7 @@
       let velocity = 0; // current horizontal velocity
 
       onUpdate(() => {
-        const delta = dt(); // ✅ correct Kaboom function name
-        // or: const delta = dt();  (also works, depending on Kaboom version)
+        const delta = dt();
 
         // handle acceleration
         if (isKeyDown("right")) {
@@ -174,6 +178,24 @@
         // apply movement
         player.move(velocity, 0);
       });
-    </script>
-  </body>
-</html>
+    }
+
+    if (typeof window !== "undefined" && canvasRef.current) {
+      init();
+    }
+  }, []);
+
+  console.log("Rendering Game component");
+
+  return (
+    <div
+      style={{
+        transform: "translateY(-60px)",
+      }}
+    >
+      <canvas ref={canvasRef}></canvas>
+    </div>
+  );
+}
+
+export default dynamic(() => Promise.resolve(Game), { ssr: false });

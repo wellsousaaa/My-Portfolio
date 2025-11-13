@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "aos": "^2.3.4",
+    "kaplay": "^3001.0.19",
     "next": "^12.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

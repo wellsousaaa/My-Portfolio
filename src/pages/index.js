@@ -3,6 +3,7 @@ import Contact from "../components/react-components/sections/Contact.jsx";
 import Profile from "../components/Profile";
 import Projects from "../components/Projects";
 import { useEffect, useRef } from "react";
+import Game from "../components/Game.jsx";
 
 const urls = [
   "https://www.instagram.com/wellsousaaa/",
@@ -12,30 +13,32 @@ const urls = [
 ];
 
 export default function App() {
-  const topButtonRef = useRef();
+  // const topButtonRef = useRef();
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const handleScroll = () => {
-      if (
-        document.body.scrollTop > 50 ||
-        document.documentElement.scrollTop > 50
-      )
-        topButtonRef.current.style.display = "block";
-      else {
-        topButtonRef.current.style.display = "none";
-      }
-    };
+  // useEffect(() => {
+  //   if (typeof window === "undefined") return;
+  //   const handleScroll = () => {
+  //     if (
+  //       document.body.scrollTop > 50 ||
+  //       document.documentElement.scrollTop > 50
+  //     )
+  //       topButtonRef.current.style.display = "block";
+  //     else {
+  //       topButtonRef.current.style.display = "none";
+  //     }
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
+  //   window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
+
   return (
     <>
-      <button
+      <Game />
+      {/* <button
         style={{ display: "none" }}
         ref={topButtonRef}
         className="top-button"
@@ -49,7 +52,7 @@ export default function App() {
       <Header />
       <Profile />
       <Projects />
-      <Contact urls={urls} />
+      <Contact urls={urls} /> */}
     </>
   );
 }
