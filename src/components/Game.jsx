@@ -1,14 +1,30 @@
 import { useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 
-function Game() {
-  const canvasRef = useRef(null);
-
+function Game({ canvasContainerRef, scale: SCALE }) {
   useEffect(() => {
     async function init() {
       const kaplay = (await import("kaplay")).default;
 
-      const SCALE = 4;
+      const newCanvas = document.createElement("canvas");
+      newCanvas.backgroundColor = "#000";
+      newCanvas.style.width = `${174 * (window.innerWidth / SCALE / 174)}px`;
+      newCanvas.style.height = `135px`;
+      newCanvas.style.imageRendering = "pixelated";
+
+      const canvas = canvasContainerRef.current.appendChild(newCanvas);
+      canvasContainerRef.current.style.filter = null;
+
+      const k = kaplay({
+        global: true,
+        width: 174 * (window.innerWidth / SCALE / 174),
+        height: 135,
+        crisp: true,
+        scale: SCALE,
+        canvas,
+        backgroundColor: "#87ceeb",
+        letterbox: true,
+      });
 
       const {
         loadSprite,
@@ -30,14 +46,7 @@ function Game() {
         dt,
         isKeyDown,
         clamp,
-      } = kaplay({
-        global: true,
-        width: 174 * (window.innerWidth / SCALE / 174),
-        height: 135,
-        crisp: true,
-        scale: SCALE,
-        canvas: canvasRef.current,
-      });
+      } = k;
 
       loadSprite("player", "/assets/well_sprites_v2.webp", {
         sliceX: 11, // número máximo de frames horizontais (idle tem 11)
@@ -50,7 +59,7 @@ function Game() {
       });
 
       loadSprite("button", "/assets/plus.png");
-      loadSprite("background", "/assets/game-background.webp");
+      loadSprite("background", "/assets/game-background-v2.webp");
 
       for (let i = 0; i < window.innerWidth / 2 / 174; i++) {
         add([sprite("background"), pos(i * 174, 0)]);
@@ -90,7 +99,7 @@ function Game() {
 
       // player (dynamic)
       const player = add([
-        pos(10, 0),
+        pos(10, 100),
         area(),
         body(),
         outline(2, rgb(255, 255, 255)),
@@ -180,22 +189,30 @@ function Game() {
       });
     }
 
-    if (typeof window !== "undefined" && canvasRef.current) {
+    let resizeTimer = null;
+    const handleResize = () => {
+      canvasContainerRef.current.style.filter = "blur(10px)";
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        canvasContainerRef.current.innerHTML = "";
+        if (canvasContainerRef.current) init();
+      }, 150);
+    };
+
+    if (typeof window !== "undefined" && canvasContainerRef.current) {
+      window.addEventListener("resize", handleResize);
       init();
     }
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (resizeTimer) clearTimeout(resizeTimer);
+    };
   }, []);
 
   console.log("Rendering Game component");
 
-  return (
-    <div
-      style={{
-        transform: "translateY(-60px)",
-      }}
-    >
-      <canvas ref={canvasRef}></canvas>
-    </div>
-  );
+  return null;
 }
 
 export default dynamic(() => Promise.resolve(Game), { ssr: false });

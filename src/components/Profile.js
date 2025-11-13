@@ -50,13 +50,13 @@ export default function Profile() {
         className="f-col"
         style={{ margin: "75px auto auto auto" }}
       >
-        <h1> Full Stack Developer &#38; Digital Designer </h1>
-        <img
+        <h1> Full Stack Developer</h1>
+        {/* <img
           loading="lazy"
           alt="Wendell de Sousa"
           className="my-photo"
           src={photo}
-        />
+        /> */}
         <h2>Olá, eu sou Wendell. Tudo bem?</h2>
         <p className="desc">
           Moro em São Paulo e sou programador e freelancer formado em

@@ -5,6 +5,8 @@ import Projects from "../components/Projects";
 import { useEffect, useRef } from "react";
 import Game from "../components/Game.jsx";
 
+const SCALE = 4;
+
 const urls = [
   "https://www.instagram.com/wellsousaaa/",
   "https://github.com/wellsousaaa",
@@ -13,6 +15,7 @@ const urls = [
 ];
 
 export default function App() {
+  const canvasContainerRef = useRef();
   // const topButtonRef = useRef();
 
   // useEffect(() => {
@@ -37,7 +40,18 @@ export default function App() {
 
   return (
     <>
-      <Game />
+      <div
+        style={{
+          transform: "translateY(-60px)",
+          maxWidth: "100vw",
+          overflow: "hidden",
+          minHeight: 135 * SCALE + 5,
+        }}
+        ref={canvasContainerRef}
+      >
+        <Game canvasContainerRef={canvasContainerRef} scale={SCALE} />
+      </div>
+      <Profile />
       {/* <button
         style={{ display: "none" }}
         ref={topButtonRef}
