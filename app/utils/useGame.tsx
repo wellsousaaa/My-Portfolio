@@ -9,6 +9,10 @@ type UseGameProps = {
 export default function useGame({ canvasContainerRef, scale: SCALE }: UseGameProps) {
   const [initialized, setInitialized] = useState(false);
 
+  const getWidth = () => {
+    return window.innerWidth > 768 ? Math.floor(window.innerWidth * 0.9) : window.innerWidth + 4;
+  };
+
   useEffect(() => {
     async function init(widthSize: number = window.innerWidth) {
       if (!canvasContainerRef) return;
@@ -224,13 +228,13 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
       }
       resizeTimer = setTimeout(() => {
         canvasContainerRef.current.innerHTML = "";
-        if (canvasContainerRef.current) init(Math.floor(window.innerWidth * 0.9));
+        if (canvasContainerRef.current) init(getWidth());
       }, 150);
     };
 
     if (typeof window !== "undefined" && canvasContainerRef?.current) {
       window.addEventListener("resize", handleResize);
-      if (!initialized) init(Math.floor(window.innerWidth * 0.9));
+      if (!initialized) init(getWidth());
     }
 
     return () => {

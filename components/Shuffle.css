@@ -5,10 +5,8 @@
   will-change: transform;
   line-height: 1;
   font-size: 4rem;
-  
-  /* font-family: 'BirchLeaf', sans-serif; */
+
   image-rendering: pixelated;
-  /* font-family: 'Press Start 2P', sans-serif; */
   text-transform: uppercase;
   visibility: hidden;
 }

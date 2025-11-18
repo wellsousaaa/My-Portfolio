@@ -82,14 +82,6 @@
   }
 } */
 
-@font-face {
-  font-family: "BirchLeaf"; /* Choose a name for your font */
-  src: url("./assets/Mleitod.ttf") format("truetype");
-  /* Add other formats for broader browser support */
-  font-weight: normal; /* Optional: specify font weight */
-  font-style: normal; /* Optional: specify font style */
-}
-
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -168,25 +160,20 @@
   }
 }
 
-.text-regular-font {
-  font-family: "BirchLeaf", sans-serif;
-  image-rendering: pixelated;
-  text-rendering: pixelated;
-}
-
 .title-name {
   position: relative;
-  /* width: fit-content; */
+  width: fit-content;
+  background-color: #fff;
   /* margin-top: 5rem; */
 }
 
 .title-name::before {
   position: absolute;
-  content: "Oi, eu...";
+  content: "Oi, eu";
   font-size: 1rem;
   font-weight: 600;
   top: -0.8rem;
-  left: 0.3rem;
+  left: -0.3rem;
   /* left: -0.8rem; */
   background: linear-gradient(
     180deg,
@@ -197,12 +184,65 @@
   text-transform: none;
 }
 
-body {
-  max-width: 90%;
-  margin: auto !important;
-  border-left: 1px solid #d4dff3;
-  border-right: 1px solid #d4dff3;
-  height: auto !important;
+.title-name h2::after {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 60px;
 
+  background-image: url("https://i.gifer.com/4M4u.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+  image-rendering: pixelated;
+
+  /* z-index: -1; */
+  animation: up-and-down 2s steps(4) infinite;
+  filter: drop-shadow(2px 2px 0px rgba(255, 255, 255, 1));
+}
+
+.title-name h2::after {
+  top: -1rem;
+  right: -2rem;
+  animation-delay: 600ms;
+  --rotate: 1;
+}
+
+/* .title-name h2::before {
+  bottom: -2rem;
+  left: -2rem;
+  --rotate: -1;
+  transform: rotateY(-1);
+} */
+
+@keyframes up-and-down {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15%);
+  }
+}
+
+body {
   color: #190031;
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    max-width: 90%;
+    margin: auto !important;
+    border-left: 1px solid #d4dff3;
+    border-right: 1px solid #d4dff3;
+    height: auto !important;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .title-name::before {
+    left: -0.3rem;
+    top: -1rem;
+  }
 }

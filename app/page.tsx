@@ -1,6 +1,7 @@
 "use client";
 
 import Profile from "@/app/components/sections/Profile";
+import Projects from "@/app/components/sections/Projects";
 import StarSeparator from "@/app/components/StarSeparator";
 import useGame from "@/app/utils/useGame";
 import React from "react";
@@ -24,6 +25,10 @@ export default function Home() {
       <StarSeparator />
 
       <Profile />
+
+      <StarSeparator />
+
+      <Projects />
     </>
   );
 }
