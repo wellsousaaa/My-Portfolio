@@ -10,7 +10,7 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
   const [initialized, setInitialized] = useState(false);
 
   const getWidth = () => {
-    return window.innerWidth > 768 ? Math.floor(window.innerWidth * 0.9) : window.innerWidth + 4;
+    return window.innerWidth > 768 ? Math.floor(window.innerWidth * 0.9) : window.innerWidth;
   };
 
   useEffect(() => {

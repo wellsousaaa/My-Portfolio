@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.kra
+.webp~
+.webp-autosave
+public/assets/well_sprites_v2.webp~
+public/assets/well_sprites.webp-autosave.kra
+public/assets/game-background.webp~
+public/assets/photo.webp

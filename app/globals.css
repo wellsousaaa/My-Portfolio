@@ -232,11 +232,23 @@ body {
 
 @media screen and (min-width: 768px) {
   body {
+
+    height: auto !important;
+  }
+
+  body > main {
     max-width: 90%;
     margin: auto !important;
     border-left: 1px solid #d4dff3;
     border-right: 1px solid #d4dff3;
-    height: auto !important;
+  }
+
+  .game-section {
+    border-bottom: 1px solid #d4dff3;
+    max-height: 424px;
+    
+    background-size: 600px 600px;
+    image-rendering: pixelated;
   }
 }
 

@@ -8,7 +8,7 @@ export default function Profile() {
   return (
     <section className="w-10/12 mx-auto">
 
-      <div className="flex items-center justify-center gap-5 mt-20 flex-col-reverse md:flex-row">
+      <div className="flex items-center justify-center gap-5 flex-col-reverse md:flex-row">
         <div className="flex flex-col items-center md:items-start">
           <div className="title-name font-bold text-6xl">
             <h2 className="mx-auto">
@@ -17,7 +17,7 @@ export default function Profile() {
           </div>
 
           <p className="max-w-100 mt-3 text-center md:text-left">
-            Moro em São Paulo e trabalho como desenvolvedor Full-Stack. Sou
+            Me chamo Wendell Sousa, moro em São Paulo e trabalho como desenvolvedor Full-Stack. Sou
             graduado em <Highlighter animationDuration={200} action="underline" color="#87CEFA"><i>Análise e Desenvolvimento de Sistemas</i></Highlighter>.
           </p>
         </div>

@@ -14,21 +14,24 @@ export default function Home() {
 
   return (
     <>
-      <div
-        className="overflow-hidden max-w-dvw -translate-y-1"
-        style={{
-          minHeight: 106 * SCALE,
-        }}
-        ref={canvasContainerRef}
-      />
+      <section className="game-section">
+        <div
+          className="overflow-hidden mx-auto"
+          style={{
+            minHeight: 106 * SCALE,
+            maxWidth: "90%",
+          }}
+          ref={canvasContainerRef}
+        />
+      </section>
 
       <StarSeparator />
 
-      <Profile />
-
-      <StarSeparator />
-
-      <Projects />
+      <main className="pt-20">
+        <Profile />
+        <StarSeparator />
+        <Projects />
+      </main>
     </>
   );
 }
