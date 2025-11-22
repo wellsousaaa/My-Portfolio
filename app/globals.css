@@ -198,30 +198,25 @@
   image-rendering: pixelated;
 
   /* z-index: -1; */
-  animation: up-and-down 2s steps(4) infinite;
+  animation: up-and-down 1.5s steps(4) infinite;
   filter: drop-shadow(2px 2px 0px rgba(255, 255, 255, 1));
 }
 
 .title-name h2::after {
   top: -1rem;
   right: -2rem;
-  animation-delay: 600ms;
-  --rotate: 1;
 }
 
 /* .title-name h2::before {
   bottom: -2rem;
   left: -2rem;
-  --rotate: -1;
-  transform: rotateY(-1);
 } */
 
 @keyframes up-and-down {
-  0%,
-  100% {
+  0% {
     transform: translateY(0);
   }
-  50% {
+  100% {
     transform: translateY(-15%);
   }
 }
@@ -232,7 +227,6 @@ body {
 
 @media screen and (min-width: 768px) {
   body {
-
     height: auto !important;
   }
 
@@ -246,7 +240,7 @@ body {
   .game-section {
     border-bottom: 1px solid #d4dff3;
     max-height: 424px;
-    
+
     background-size: 600px 600px;
     image-rendering: pixelated;
   }
