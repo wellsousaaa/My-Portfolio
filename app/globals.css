@@ -252,3 +252,8 @@ body {
     top: -1rem;
   }
 }
+
+.gnat-game-container canvas {
+  border-radius: 1rem;
+  border: 0.5rem solid var(--color-border);
+}
