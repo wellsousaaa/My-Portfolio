@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 
-const SCALE = 3;
+const SCALE = 4;
 
 export default function useGame() {
   const [initialized, setInitialized] = useState(false);
@@ -46,6 +46,7 @@ export default function useGame() {
         text,
         dt,
         choose,
+        shake,
         z, // Added z for z-index
       } = k;
 
@@ -58,9 +59,23 @@ export default function useGame() {
       });
 
       loadSprite("bug", "/assets/bug_spr.png", {
-        sliceX: 3,
+        sliceX: 4,
         anims: {
-          idle: { from: 0, to: 2, loop: true, speed: 12 },
+          idle: { from: 0, to: 3, loop: true, speed: 24 },
+        },
+      });
+
+      loadSprite("bug_circle", "/assets/bug_circ_spr.png", {
+        sliceX: 5,
+        anims: {
+          idle: { from: 0, to: 4, loop: true, speed: 12 },
+        },
+      });
+
+      loadSprite("bug_bomb", "/assets/bug_bomb_spr.png", {
+        sliceX: 6,
+        anims: {
+          idle: { from: 0, to: 4, loop: true, speed: 12 },
         },
       });
 
@@ -71,27 +86,27 @@ export default function useGame() {
       const BUG_TYPES = [
         {
           name: "standard",
-          color: rgb(255, 255, 255),
-          scale: 0.35,
+          scale: 0.75,
           speedMin: 40,
           speedMax: 120,
-          chance: 0.65
+          chance: 0.65,
+          sprite: "bug",
         },
         {
           name: "heavy",
-          color: rgb(180, 50, 200),
-          scale: 0.5,
+          scale: 1,
           speedMin: 20,
           speedMax: 50,
-          chance: 0.20
+          chance: 0.20,
+          sprite: "bug",
         },
         {
           name: "spinner",
-          color: rgb(50, 255, 50),
-          scale: 0.35,
+          scale: 0.75,
           speedMin: 100,
           speedMax: 100,
-          chance: 0.15
+          chance: 0.15,
+          sprite: "bug_circle",
         },
       ];
 
@@ -124,13 +139,12 @@ export default function useGame() {
         const type = forceType || pickBugType();
 
         const bug = add([
-          sprite("bug"),
+          "bug",
           pos(startPos),
           scale(type.scale),
-          color(type.color),
           anchor("center"),
           area(),
-          "bug",
+          sprite(type.sprite),
           // Ensure bugs are below the debug text (z-index 0 is default)
           {
             dest: vec2(width() / 2, height() / 2),
@@ -183,6 +197,14 @@ export default function useGame() {
           };
           pickNewSpot();
           bug.onUpdate(() => {
+            const distance = bug.pos.dist(bug.dest);
+
+            // If the bug is close enough to the target, stop flipping
+            if (distance < 5) {
+              bug.flipX = false;
+              return;
+            }
+
             const dir = bug.dest.sub(bug.pos).unit();
             bug.move(dir.scale(bug.speed));
             if (dir.x < 0) bug.flipX = false;
@@ -195,26 +217,26 @@ export default function useGame() {
       function spawnBoss() {
         const startPos = getOffscreenPos(60);
         const boss = add([
-          sprite("bug"),
+          sprite("bug_bomb"),
           pos(startPos),
           scale(0.9),
-          color(rgb(255, 50, 50)),
+          // color(rgb(255, 50, 50)),
           area(),
           anchor("center"),
           "boss",
           {
             dest: vec2(width() / 2, height() / 2),
-            speed: 30,
+            speed: 50,
             timer: 5,
           }
         ]);
         boss.play("idle");
-        const label = boss.add([
-          text("5", { size: 24, font: "monospace" }),
-          anchor("center"),
-          pos(0, -40),
-          color(255, 255, 255)
-        ]);
+        // const label = boss.add([
+        //   text("5", { size: 24, font: "monospace" }),
+        //   anchor("center"),
+        //   pos(0, -40),
+        //   color(255, 255, 255)
+        // ]);
         boss.onClick(() => {
           addKaboom(boss.pos, { scale: 1.5 });
           boss.destroy();
@@ -228,12 +250,13 @@ export default function useGame() {
         boss.onUpdate(() => {
           const dir = boss.dest.sub(boss.pos).unit();
           boss.move(dir.scale(boss.speed));
-          if (dir.x < 0) boss.flipX = false;
-          else boss.flipX = true;
+          // if (dir.x < 0) boss.flipX = false;
+          // else boss.flipX = true;
           boss.timer -= dt();
-          label.text = Math.ceil(boss.timer).toString();
+          // label.text = Math.ceil(boss.timer).toString();
           if (boss.timer <= 0) {
             addKaboom(boss.pos, { scale: 2 });
+            shake()
             for (let i = 0; i < 20; i++) {
               spawnBug(boss.pos);
             }
@@ -265,8 +288,8 @@ export default function useGame() {
 
         // 2. Update Speed
         // Decrement loopTime (limit to minimum 0.5s)
-        if (loopTime > 1.5) {
-          loopTime -= 0.05; // Increased decrement so you can actually see it change
+        if (loopTime > 1) {
+          loopTime -= 0.1; // Increased decrement so you can actually see it change
         }
 
         // 3. Update Debug Text
