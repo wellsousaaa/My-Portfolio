@@ -278,4 +278,5 @@ body {
   background: transparent; /* let the blurred layer show through */
   border-radius: 1rem;
   border: 2px solid #fff;
+  cursor: none !important;
 }

@@ -1,13 +1,17 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { Pointer } from "@/components/ui/pointer";
+import { SmoothCursor } from "@/components/ui/smooth-cursor";
+import React, { useEffect } from "react";
 
 export default function useGame() {
-  const [initialized, setInitialized] = useState(false);
   const canvasContainerRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let k: any = null;
+
     async function init() {
+
       const kaplay = (await import("kaplay")).default;
 
       const BASE_SIZE = 174;
@@ -15,13 +19,12 @@ export default function useGame() {
       function computeScale() {
         const tilesX = Math.floor(window.innerWidth / BASE_SIZE);
         const tilesY = Math.floor(window.innerHeight / BASE_SIZE);
-
-        return Math.max(1, Math.min(tilesX, tilesY)); // at least scale 1
+        return Math.max(1, Math.min(tilesX, tilesY));
       }
 
       const SCALE = computeScale();
 
-      const k = kaplay({
+      k = kaplay({
         global: true,
         root: canvasContainerRef.current || document.body,
         width: BASE_SIZE,
@@ -62,14 +65,12 @@ export default function useGame() {
         onUpdate,
         center,
         onKeyPress,
-        onClick,
         wave,
         time,
         opacity,
         fixed,
         play,
         loadSound,
-
       } = k;
 
       // --- ASSETS ---
@@ -101,41 +102,36 @@ export default function useGame() {
         },
       });
 
-      loadSound("score", "/assets/audio/score_increment.wav");
+      loadSprite("ink_splat", "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/6d6010103863169.5f569176c35ac.png");
 
+      loadSound("score", "/assets/audio/score_increment.wav");
       loadSound("mosquito_spawn", "/assets/audio/mosquito_spawn.wav");
       loadSound("mosquito_spawn_2", "/assets/audio/mosquito_spawn_2.wav");
-
       loadSound("mosquito_1", "/assets/audio/mosquito_1.wav");
       loadSound("mosquito_2", "/assets/audio/mosquito_2.wav");
       loadSound("mosquito_3", "/assets/audio/mosquito_3.wav");
       loadSound("mosquito_4", "/assets/audio/mosquito_4.wav");
       loadSound("mosquito_5", "/assets/audio/mosquito_5.wav");
       loadSound("mosquito_6", "/assets/audio/mosquito_6.wav");
-
       loadSound("bomb_mosquito", "/assets/audio/bomb_mosquito.wav");
       loadSound("bomb_explode", "/assets/audio/bomb_explode.wav");
       loadSound("bomb_spawn", "/assets/audio/bomb_spawn.wav");
 
-      // --- GAME SCENE ---
       scene("game", () => {
         const bg = add([
           sprite("background"),
-          // pos(-25, -20),
           scale(0.7),
           opacity(0.3),
           z(-10),
         ]);
         bg.play("idle");
 
-        // --- GAME STATE ---
         let maxHealth = 100;
         let curHealth = 100;
         let score = 0;
-
         let startTime = time();
 
-        // UI: Health Meter Container
+        // UI
         add([
           rect(60, 6, { radius: 1 }),
           pos(width() - 65, 5),
@@ -145,7 +141,6 @@ export default function useGame() {
           fixed()
         ]);
 
-        // UI: Health Meter Fill
         const healthBar = add([
           rect(58, 4, { radius: 1 }),
           pos(width() - 64, 6),
@@ -154,7 +149,6 @@ export default function useGame() {
           fixed()
         ]);
 
-        // UI: Score Label
         const scoreLabel = add([
           text("0", { size: 10, font: "monospace" }),
           pos(5, 5),
@@ -170,7 +164,7 @@ export default function useGame() {
             scale: 0.9,
             speedMin: 40,
             speedMax: 120,
-            chance: 0.50,
+            chance: 0.40,
             sprite: "bug",
           },
           {
@@ -194,17 +188,26 @@ export default function useGame() {
             scale: 0.9,
             speedMin: 60,
             speedMax: 80,
-            chance: 0.20,
-            sprite: "bug_circle", // Reusing standard bug sprite
-            color: rgb(250, 250, 255) // Blue tint
+            chance: 0.15,
+            sprite: "bug_circle",
+            color: rgb(250, 250, 255)
           },
+          {
+            name: "splasher",
+            scale: 1.1,
+            speedMin: 30, // Move slower to give player time
+            speedMax: 40,
+            chance: 0.15,
+            sprite: "bug_bomb", // Reusing bomb sprite
+            color: rgb(80, 0, 80), // Dark purple
+            tint: true
+          }
         ];
 
         function getOffscreenPos(margin = 40) {
           const side = choose(["top", "bottom", "left", "right"]);
           const w = width();
           const h = height();
-
           switch (side) {
             case "top": return vec2(rand(0, w), -margin);
             case "bottom": return vec2(rand(0, w), h + margin);
@@ -214,28 +217,84 @@ export default function useGame() {
           }
         }
 
-        function pickBugType() {
+        function pickBugType(hasCustomPos: boolean) {
           const r = rand(0, 1);
           let cumulative = 0;
           for (const type of BUG_TYPES) {
+            if (type.name === "splasher" && hasCustomPos) continue; // Don't pick splasher if custom pos
             cumulative += type.chance;
             if (r <= cumulative) return type;
           }
           return BUG_TYPES[0];
         }
 
+        // --- SPLASH EFFECT ---
+        function triggerSquidInk() {
+          play("bomb_explode", { volume: 0.3, detune: -200 }); // Low thud
+
+          // Random offset for visual variety
+          const offset = vec2(rand(-20, 20), rand(-20, 20));
+          const spawnPos = center().add(offset);
+
+          // Scale 1.3 to 1.6 relative to 100px base SVG on 174px screen -> ~30% coverage
+          const targetScale = rand(0.15, 0.18);
+
+          const ink = add([
+            sprite("ink_splat"),
+            pos(spawnPos),
+            anchor("center"),
+            scale(0),
+            opacity(1),
+            fixed(),
+            z(200), // Very top
+            "ink_overlay",
+            {
+              lifeTime: 5.0,
+              state: "grow" // grow, stay, fade
+            }
+          ]);
+
+          // State Machine for Ink
+          ink.onUpdate(() => {
+            if (ink.state === "grow") {
+              ink.scaleTo(ink.scale.x + dt() * 0.5);
+              if (ink.scale.x >= targetScale) {
+                ink.scaleTo(targetScale);
+                ink.state = "stay";
+              }
+            } else if (ink.state === "stay") {
+              ink.lifeTime -= dt();
+              ink.scale.y += dt() * 0.003; // Slight vertical stretch
+              ink.pos.y += dt() * 2; // Slight downward drift
+              if (ink.lifeTime <= 0) {
+                ink.state = "fade";
+              }
+            } else if (ink.state === "fade") {
+              ink.pos.y += dt() * 5; // Faster downward drift
+              ink.scale.y += dt() * 0.003; // Slight vertical stretch
+              ink.opacity -= dt(); // Fade out over 1 sec
+              if (ink.opacity <= 0) ink.destroy();
+            }
+          });
+        }
+
         function spawnBug(customPos: any = null, forceType: any = null) {
           const difficulty = 1 + (time() - startTime) / 60;
+          const type = forceType || pickBugType(!!customPos);
 
-          const startPos = customPos || getOffscreenPos(30);
-          const type = forceType || pickBugType();
+          let startPos = customPos;
 
-          // Scaling logic for orbiters to prevent them from being too fast
-          let speedMult = difficulty;
-          if (type.name === "spinner") {
-            // Dampen speed increase for spinners, otherwise they become unclickable
-            speedMult = 1 + (difficulty - 1) * 0.4;
+          // Override spawn for Splasher (Always Top)
+          if (!startPos) {
+            if (type.name === "splasher") {
+              startPos = vec2(rand(20, width() - 20), -30);
+            } else {
+              startPos = getOffscreenPos(30);
+            }
           }
+
+          let speedMult = difficulty;
+          if (type.name === "spinner") speedMult = 1 + (difficulty - 1) * 0.4;
 
           const bug = add([
             "bug",
@@ -256,11 +315,13 @@ export default function useGame() {
               orbitCenter: vec2(width() / 2, height() / 2),
               orbitSpeed: (rand(1, 2.5) * (rand() < 0.5 ? 1 : -1)) * speedMult,
               // Square Props
-              squareState: 0, // 0:right, 1:down, 2:left, 3:up
+              squareState: 0,
               squareTimer: 0,
               squareSide: rand(40, 70),
               squareCenter: vec2(rand(40, width() - 40), rand(40, height() - 40)),
-              isSquaring: false
+              isSquaring: false,
+              // Splasher Props
+              splasherTimer: 3.0,
             }
           ]);
 
@@ -269,40 +330,40 @@ export default function useGame() {
           bug.onClick(() => {
             addKaboom(bug.pos, { scale: 0.5 });
             score++;
-            if (score % 50 === 0) {
-              play("score");
-            }
+            if (score % 50 === 0) play("score");
 
-            const mosquitoSoundNumber = Math.floor(rand(1, 7));
-            play(`mosquito_${mosquitoSoundNumber}`, {
-              volume: 0.3
-            });
+            play(`mosquito_${Math.floor(rand(1, 7))}`, { volume: 0.3 });
 
             scoreLabel.text = score.toString();
-            // FILL LESS: Reduced from 5 to 2
             curHealth = Math.min(curHealth + 2, maxHealth);
             bug.destroy();
           });
 
-          if (type.name === "heavy") {
-            play("mosquito_spawn_2", { volume: 0.2 });
-          }
+          // --- BEHAVIOR SWITCH ---
+          if (type.name === "splasher") {
+            // Linear descent & Timer
+            bug.onUpdate(() => {
+              bug.move(0, bug.speed); // Straight down
 
-          if (type.name === "square") {
-            play("bomb_spawn", { volume: 0.05, speed: 1.5, detune: 30 });
-          }
+              bug.splasherTimer -= dt();
+              if (bug.splasherTimer <= 0) {
+                triggerSquidInk();
+                bug.destroy();
+              }
 
-          if (type.name === "spinner") {
+              // If it goes off screen bottom without splashing (unlikely with timer, but safe)
+              if (bug.pos.y > height() + 50) bug.destroy();
+            });
+
+          } else if (type.name === "spinner") {
             play("mosquito_spawn", { volume: 0.2 });
-            // --- ORBIT LOGIC ---
             bug.onUpdate(() => {
               if (bug.isOrbiting) {
                 bug.orbitAngle += dt() * bug.orbitSpeed;
                 bug.pos = bug.orbitCenter.add(
                   vec2(Math.cos(bug.orbitAngle), Math.sin(bug.orbitAngle)).scale(bug.orbitRadius)
                 );
-                if (bug.pos.x < bug.orbitCenter.x) bug.flipX = false;
-                else bug.flipX = true;
+                bug.flipX = bug.pos.x >= bug.orbitCenter.x;
               } else {
                 const distToCenter = bug.pos.dist(bug.orbitCenter);
                 if (distToCenter <= bug.orbitRadius) {
@@ -311,36 +372,27 @@ export default function useGame() {
                 } else {
                   const dir = bug.orbitCenter.sub(bug.pos).unit();
                   bug.move(dir.scale(bug.speed));
-                  if (dir.x < 0) bug.flipX = false;
-                  else bug.flipX = true;
+                  bug.flipX = dir.x >= 0;
                 }
               }
             });
           } else if (type.name === "square") {
-            // --- SQUARE LOGIC ---
+            play("bomb_spawn", { volume: 0.05, speed: 1.5, detune: 30 });
             bug.onUpdate(() => {
               if (bug.isSquaring) {
                 bug.squareTimer -= dt();
                 if (bug.squareTimer <= 0) {
-                  // Switch direction
                   bug.squareState = (bug.squareState + 1) % 4;
-                  // Reset timer based on speed and side length
                   bug.squareTimer = bug.squareSide / bug.speed;
                 }
-
-                // Move based on state
                 let dir = vec2(0, 0);
-                if (bug.squareState === 0) dir = vec2(1, 0);      // Right
-                else if (bug.squareState === 1) dir = vec2(0, 1); // Down
-                else if (bug.squareState === 2) dir = vec2(-1, 0);// Left
-                else if (bug.squareState === 3) dir = vec2(0, -1);// Up
-
+                if (bug.squareState === 0) dir = vec2(1, 0);
+                else if (bug.squareState === 1) dir = vec2(0, 1);
+                else if (bug.squareState === 2) dir = vec2(-1, 0);
+                else if (bug.squareState === 3) dir = vec2(0, -1);
                 bug.move(dir.scale(bug.speed));
-
                 if (dir.x !== 0) bug.flipX = dir.x > 0;
-
               } else {
-                // Move to square center first
                 const dist = bug.pos.dist(bug.squareCenter);
                 if (dist < 5) {
                   bug.isSquaring = true;
@@ -353,19 +405,15 @@ export default function useGame() {
               }
             });
           } else {
-            // --- STANDARD LOGIC ---
+            // Standard Logic
             const pickNewSpot = () => {
               if (!bug.exists()) return;
               bug.dest = vec2(rand(0, width()), rand(0, height()));
-
               const currentDiff = 1 + (time() - startTime) / 60;
               bug.speed = rand(bug.typeData.speedMin, bug.typeData.speedMax) * currentDiff;
-
-              const waitTime = rand(0.5, 1.5) / currentDiff;
-              wait(waitTime, pickNewSpot);
+              wait(rand(0.5, 1.5) / currentDiff, pickNewSpot);
             };
             pickNewSpot();
-
             bug.onUpdate(() => {
               const distance = bug.pos.dist(bug.dest);
               if (distance < 5) {
@@ -374,8 +422,7 @@ export default function useGame() {
               }
               const dir = bug.dest.sub(bug.pos).unit();
               bug.move(dir.scale(bug.speed));
-              if (dir.x < 0) bug.flipX = false;
-              else bug.flipX = true;
+              bug.flipX = dir.x >= 0;
             });
           }
         }
@@ -394,7 +441,6 @@ export default function useGame() {
             "boss",
             {
               dest: vec2(width() / 2, height() / 2),
-              // Boss moves faster over time
               speed: 50 * difficulty,
               timer: difficulty < 2 ? 5 : 3,
             }
@@ -405,9 +451,7 @@ export default function useGame() {
           boss.onClick(() => {
             addKaboom(boss.pos, { scale: 1.5 });
             score += 10;
-            if (score % 50 === 0) {
-              play("score");
-            }
+            if (score % 50 === 0) play("score");
             play("bomb_mosquito", { volume: 0.4 });
             scoreLabel.text = score.toString();
             curHealth = Math.min(curHealth + 20, maxHealth);
@@ -431,104 +475,71 @@ export default function useGame() {
               shake();
               curHealth -= 30;
               play("bomb_explode", { volume: 0.6 });
-
-              // Spawn many bugs
-              for (let i = 0; i < 20; i++) {
-                spawnBug(boss.pos);
-              }
+              for (let i = 0; i < 20; i++) spawnBug(boss.pos);
               boss.destroy();
             }
           });
         }
 
-        // --- INIT SPAWN ---
         spawnBug();
 
-        let canSpawnBoss = false;
-
-        // --- DYNAMIC SPAWN LOOP ---
+        // --- SPAWN LOOP ---
         function runSpawnLoop() {
           const difficulty = 1 + (time() - startTime) / 60;
-
-          if (get("bug").length < 25) {
-            spawnBug();
-          }
-
+          if (get("bug").length < 25) spawnBug();
           const nextSpawnTime = Math.max(0.4, 2.5 / difficulty);
           wait(nextSpawnTime, runSpawnLoop);
         }
-
         runSpawnLoop();
 
         // --- BOSS LOOP ---
+        let canSpawnBoss = false;
         loop(15, () => {
           if (get("bug").length < 30 && canSpawnBoss) {
             const difficulty = 1 + (time() - startTime) / 60;
-            // Spawn multiple bosses based on difficulty
-            // Level 1 = 1 boss, Level 2 = 2 bosses, etc.
             const bossCount = Math.floor(difficulty);
-
-            for (let i = 0; i < bossCount; i++) {
-              // Slight stagger for multiple spawns
-              wait(i * 0.5, () => spawnBoss());
-            }
+            for (let i = 0; i < bossCount; i++) wait(i * 0.5, () => spawnBoss());
           } else {
             canSpawnBoss = true;
           }
         });
 
-        // --- HEALTH DRAIN & DIFFICULTY UPDATE ---
+        // --- HEALTH DRAIN ---
         onUpdate(() => {
           const difficulty = 1 + (time() - startTime) / 60;
-
           const bugs = get("bug").length;
           const bosses = get("boss").length;
-
-          const drainMultiplier = Math.sqrt(difficulty);
-
-          // DRAIN FASTER: Increased base multipliers
-          // Bugs: 0.2 -> 0.35, Bosses: 2.0 -> 3.5
-          const drain = ((bugs * 0.30) + (bosses * 3.5)) * drainMultiplier;
+          const drain = ((bugs * 0.30) + (bosses * 3.5)) * Math.sqrt(difficulty);
 
           curHealth -= drain * dt();
-
           if (curHealth < 0) curHealth = 0;
+
           const ratio = curHealth / maxHealth;
-
           healthBar.width = 58 * ratio;
+          healthBar.color = ratio < 0.3 ? rgb(255, 0, 0) : ratio < 0.6 ? rgb(255, 200, 0) : rgb(0, 255, 0);
 
-          if (ratio < 0.3) healthBar.color = rgb(255, 0, 0);
-          else if (ratio < 0.6) healthBar.color = rgb(255, 200, 0);
-          else healthBar.color = rgb(0, 255, 0);
-
-          if (curHealth <= 0) {
-            go("lose", { score: score });
-          }
+          if (curHealth <= 0) go("lose", { score: score });
         });
       });
 
-      // --- LOSE SCENE ---
       scene("lose", ({ score }: { score: number }) => {
         add([
           rect(width(), height()),
           color(0, 0, 0),
           opacity(0.8)
         ]);
-
         add([
           text("GAME OVER", { size: 16 }),
           pos(center().sub(0, 20)),
           anchor("center"),
           color(255, 0, 0)
         ]);
-
         add([
-          text(`Score: ${score}`, { size: 12 }),
+          text(`Pontuação: ${score}`, { size: 12 }),
           pos(center()),
           anchor("center"),
           color(255, 255, 255)
         ]);
-
         add([
           text("Space to Restart", { size: 8 }),
           pos(center().add(0, 30)),
@@ -536,24 +547,27 @@ export default function useGame() {
           color(200, 200, 200),
           "blink"
         ]);
-
-        onUpdate("blink", (t) => {
-          t.opacity = wave(0.2, 1, time() * 4);
-        });
-
-        const restart = () => go("game");
-        // onClick(restart);
-        onKeyPress("space", restart);
+        onUpdate("blink", (t) => { t.opacity = wave(0.2, 1, time() * 4); });
+        onKeyPress("space", () => go("game"));
       });
 
       go("game");
     }
 
     init();
+
+    return () => {
+      if (k && k.destroy) k.destroy();
+    }
   }, []);
 
-  return <div className="w-dvw h-dvh flex items-center justify-center">
+  return (<div className="w-dvw h-dvh flex items-center justify-center">
     <div className="gnat-game-container" ref={canvasContainerRef}>
     </div>
-  </div>;
+    <SmoothCursor cursor={<div className="text-5xl -translate-y-5 -translate-x-5">
+      🤚
+    </div>}>
+
+    </SmoothCursor>
+  </div>);
 }

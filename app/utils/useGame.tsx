@@ -91,6 +91,7 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
         opacity(0),
       ]);
 
+      /// barriers
       add([
         rect(2, height()),
         pos(0, 0),
@@ -98,7 +99,6 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
         body({ isStatic: true }),
         opacity(0),
       ]);
-
       add([
         rect(2, height()),
         pos(width() - 2, 0),
@@ -107,25 +107,26 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
         opacity(0),
       ]);
 
-      add([
-        outline(2, rgb(0, 0, 0)),
-        pos(width() / 5, height() / 5.5),
-        area({
-          scale: 0.8,
-        }),
-        body({ isStatic: true }),
-        sprite("button"),
-      ]);
+      const buttonCount = 3;
+      const idealSpacing = width() / (buttonCount + 1);
+      const spacing = Math.min(idealSpacing, 50);
 
-      add([
-        outline(2, rgb(0, 0, 0)),
-        pos(width() / 4 + 25, height() / 5.5),
-        area({
-          scale: 0.8,
-        }),
-        body({ isStatic: true }),
-        sprite("button"),
-      ]);
+      const totalWidth = spacing * (buttonCount - 1);
+      const startX = (width() - totalWidth) / 2;
+
+      const buttonY = height() / 5.5;
+
+      for (let i = 0; i < buttonCount; i++) {
+        const x = startX + spacing * i;
+
+        add([
+          outline(2, rgb(0, 0, 0)),
+          pos(x, buttonY),
+          area({ scale: 0.8 }),
+          body({ isStatic: true }),
+          sprite("button"),
+        ]);
+      }
 
       // player (dynamic)
       const player = add([
