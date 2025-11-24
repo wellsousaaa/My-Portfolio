@@ -28,6 +28,8 @@ export default function useGame() {
         height: BASE_SIZE,
         crisp: true,
         scale: SCALE,
+        touchToMouse: true,
+        background: [0, 0, 0, 0],
       });
 
       const {
@@ -66,15 +68,15 @@ export default function useGame() {
         opacity,
         fixed,
         play,
-        loadSound
+        loadSound,
+
       } = k;
 
       // --- ASSETS ---
-      loadSprite("background", "/assets/image.webp", {
-        sliceX: 9,
-        sliceY: 9,
+      loadSprite("background", "/assets/square.png", {
+        sliceX: 19,
         anims: {
-          idle: { from: 0, to: 80, loop: true, speed: 12 },
+          idle: { from: 0, to: 18, loop: true, speed: 12 },
         },
       });
 
@@ -117,7 +119,13 @@ export default function useGame() {
 
       // --- GAME SCENE ---
       scene("game", () => {
-        const bg = add([sprite("background"), pos(-20, 0), scale(0.48), z(-10)]);
+        const bg = add([
+          sprite("background"),
+          // pos(-25, -20),
+          scale(0.7),
+          opacity(0.3),
+          z(-10),
+        ]);
         bg.play("idle");
 
         // --- GAME STATE ---
@@ -159,7 +167,7 @@ export default function useGame() {
         const BUG_TYPES = [
           {
             name: "standard",
-            scale: 0.75,
+            scale: 0.9,
             speedMin: 40,
             speedMax: 120,
             chance: 0.50,
@@ -167,7 +175,7 @@ export default function useGame() {
           },
           {
             name: "heavy",
-            scale: 1,
+            scale: 1.2,
             speedMin: 20,
             speedMax: 50,
             chance: 0.15,
@@ -175,7 +183,7 @@ export default function useGame() {
           },
           {
             name: "spinner",
-            scale: 0.75,
+            scale: 0.9,
             speedMin: 100,
             speedMax: 100,
             chance: 0.15,
@@ -183,7 +191,7 @@ export default function useGame() {
           },
           {
             name: "square",
-            scale: 0.8,
+            scale: 0.9,
             speedMin: 60,
             speedMax: 80,
             chance: 0.20,
@@ -380,7 +388,7 @@ export default function useGame() {
           const boss = add([
             sprite("bug_bomb"),
             pos(startPos),
-            scale(0.9),
+            scale(1),
             area(),
             anchor("center"),
             "boss",
@@ -544,5 +552,8 @@ export default function useGame() {
     init();
   }, []);
 
-  return <div ref={canvasContainerRef} className="w-dvw h-dvh bg-black flex items-center justify-center gnat-game-container" />;
+  return <div className="w-dvw h-dvh flex items-center justify-center">
+    <div className="gnat-game-container" ref={canvasContainerRef}>
+    </div>
+  </div>;
 }

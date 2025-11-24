@@ -253,7 +253,29 @@ body {
   }
 }
 
-.gnat-game-container canvas {
+.gnat-game-container {
+  position: relative;
+  overflow: hidden;
   border-radius: 1rem;
-  border: 0.5rem solid var(--color-border);
+}
+
+.gnat-game-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/assets/code_bg_4.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* image-rendering: pixelated; */
+
+  filter: blur(0px) contrast(1);
+  z-index: 0;
+}
+
+.gnat-game-container canvas {
+  position: relative;
+  z-index: 1; /* stays above blurred background */
+  background: transparent; /* let the blurred layer show through */
+  border-radius: 1rem;
+  border: 2px solid #fff;
 }
