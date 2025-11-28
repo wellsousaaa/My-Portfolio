@@ -280,3 +280,8 @@ body {
   border: 2px solid #fff;
   cursor: none !important;
 }
+
+::view-transition-old(root), ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}

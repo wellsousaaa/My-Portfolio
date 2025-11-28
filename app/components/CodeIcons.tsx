@@ -20,7 +20,7 @@ export default function CodeIcons() {
   return (
     <div style={{ position: 'relative', overflow: 'hidden' }}>
       {/* Basic horizontal loop */}
-      <LogoLoop
+      {/* <LogoLoop
         logos={techLogos}
         speed={120}
         direction="left"
@@ -31,7 +31,7 @@ export default function CodeIcons() {
         fadeOut
         fadeOutColor="#ffffff"
         ariaLabel="Technology partners"
-      />
+      /> */}
     </div>
   );
 }

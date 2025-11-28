@@ -43,7 +43,7 @@ const project2 = {
 
 export default function Projects() {
   return (
-    <section className="mb-20 mt-50 flex flex-col gap-20">
+    <section className="mb-20 mt-50 flex flex-col gap-20" >
       <ProjectContainer {...project1} />
       <ProjectContainer  {...project2} className="flex-row-reverse" />
     </section>

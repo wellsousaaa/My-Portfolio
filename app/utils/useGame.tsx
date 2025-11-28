@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 type UseGameProps = {
-  canvasContainerRef: React.RefObject<HTMLDivElement> | null;
+  canvasContainerRef?: React.RefObject<HTMLDivElement | null>;
   scale: number;
 };
 
@@ -14,13 +14,38 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
   };
 
   useEffect(() => {
+    const scrollSmoothTo = (hash: string) => {
+      const element = document.getElementById(hash);
+      if (element) {
+        element.click();
+        element.focus();
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    };
+
+    const handleBlock = (i: number) => {
+      switch (i) {
+        case 0:
+          scrollSmoothTo("profile");
+          break;
+        case 1:
+          scrollSmoothTo("projects");
+          break;
+        case 2:
+          // go to /game 
+          window.location.href = "/game";
+          break;
+        default:
+          break;
+      }
+    }
+
     async function init(widthSize: number = window.innerWidth) {
       if (!canvasContainerRef) return;
       setInitialized(true);
       const kaplay = (await import("kaplay")).default;
 
       const newCanvas = document.createElement("canvas");
-      newCanvas.backgroundColor = "#000";
       newCanvas.style.width = `${174 * (widthSize / SCALE / 174)}px`;
       newCanvas.style.height = `135px`;
       newCanvas.style.imageRendering = "pixelated";
@@ -60,6 +85,10 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
         clamp,
         width,
         height,
+        scale,
+        anchor,
+
+        canvas: canvasInstance,
       } = k;
 
       loadSprite("player", "/assets/well_sprites_v2.webp", {
@@ -119,14 +148,37 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
       for (let i = 0; i < buttonCount; i++) {
         const x = startX + spacing * i;
 
-        add([
+        const button = add([
           outline(2, rgb(0, 0, 0)),
           pos(x, buttonY),
           area({ scale: 0.8 }),
-          body({ isStatic: true }),
+          // body({ isStatic: true }),
           sprite("button"),
+          scale(1),        // <-- required so we can animate scale later,
+          anchor("center"),
+          "menu-button",
+          {
+            index: i,
+          }
         ]);
+
+        // hover: scale up smoothly
+        button.onHover(() => {
+          button.scaleTo(1.15);   // grows by 15%
+        });
+
+        // hover end: scale back
+        button.onHoverEnd(() => {
+          button.scaleTo(1);      // return to normal
+        });
+
+        // click event
+        button.onClick(() => {
+          console.log(`Button ${i + 1} clicked!`);
+          handleBlock(i);
+        });
       }
+
 
       // player (dynamic)
       const player = add([
@@ -174,50 +226,11 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
         player.play("idle");
       });
 
-      // ✅ correct collision method in v3000+
-      player.onCollide("qblock", (block) => {
-        console.log("Hit the question block!");
-        block.color = rgb(255, 100, 100);
+      player.onCollide("menu-button", (block) => {
+        console.log(block.index);
+        handleBlock(block.index);
       });
 
-      // --- Player physics vars ---
-      let accel = 50; // how fast to accelerate
-      let maxSpeed = 30; // max horizontal speed
-      let friction = 150; // how fast to slow down when no key pressed
-
-      let velocity = 0; // current horizontal velocity
-
-      onUpdate(() => {
-        const delta = dt();
-
-        // handle acceleration
-        if (isKeyDown("right")) {
-          velocity += accel * delta;
-          player.flipX = true;
-          if (player.isGrounded() && player.curAnim() !== "walking")
-            player.play("walking");
-        } else if (isKeyDown("left")) {
-          velocity -= accel * delta;
-          player.flipX = false;
-          if (player.isGrounded() && player.curAnim() !== "walking")
-            player.play("walking");
-        } else {
-          // apply friction when no key pressed
-          if (velocity > 0) {
-            velocity = Math.max(0, velocity - friction * delta);
-          } else if (velocity < 0) {
-            velocity = Math.min(0, velocity + friction * delta);
-          }
-          if (player.isGrounded() && player.curAnim() !== "idle")
-            player.play("idle");
-        }
-
-        // clamp max speed
-        velocity = clamp(velocity, -maxSpeed, maxSpeed);
-
-        // apply movement
-        player.move(velocity, 0);
-      });
     }
 
     let resizeTimer: ReturnType<typeof setTimeout> | undefined;

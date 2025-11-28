@@ -7,7 +7,7 @@ import React from "react";
 const SCALE = 4;
 
 export default function Game() {
-  const canvasContainerRef = React.useRef<HTMLDivElement>(null);
+  const canvasContainerRef = React.useRef<HTMLDivElement | null>(null);
   const _ = useGame({ canvasContainerRef, scale: SCALE });
 
   return (
@@ -22,7 +22,7 @@ export default function Game() {
           ref={canvasContainerRef}
         />
       </section>
-      <StarSeparator />
+      <StarSeparator id="profile" />
     </>
   );
 }

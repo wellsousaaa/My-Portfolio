@@ -81,6 +81,20 @@ export default function useGame() {
         },
       });
 
+      loadSprite("spike", "/assets/spike.png", {
+        sliceX: 3,
+        anims: {
+          idle: { from: 0, to: 2, loop: true, speed: 12 },
+        },
+      });
+
+      loadSprite("cloud", "/assets/cloud_spr.png", {
+        sliceX: 8,
+        anims: {
+          idle: { from: 0, to: 7, loop: false, speed: 20 },
+        },
+      });
+
       loadSprite("bug", "/assets/bug_spr.png", {
         sliceX: 4,
         anims: {
@@ -95,6 +109,13 @@ export default function useGame() {
         },
       });
 
+      loadSprite("bug_splash", "/assets/bug_splash.png", {
+        sliceX: 4,
+        anims: {
+          idle: { from: 0, to: 3, loop: true, speed: 12 },
+        },
+      });
+
       loadSprite("bug_bomb", "/assets/bug_bomb_spr.png", {
         sliceX: 6,
         anims: {
@@ -102,7 +123,7 @@ export default function useGame() {
         },
       });
 
-      loadSprite("ink_splat", "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/6d6010103863169.5f569176c35ac.png");
+      loadSprite("ink_splat", "/assets/splash.png");
 
       loadSound("score", "/assets/audio/score_increment.wav");
       loadSound("mosquito_spawn", "/assets/audio/mosquito_spawn.wav");
@@ -198,9 +219,8 @@ export default function useGame() {
             speedMin: 30, // Move slower to give player time
             speedMax: 40,
             chance: 0.15,
-            sprite: "bug_bomb", // Reusing bomb sprite
-            color: rgb(80, 0, 80), // Dark purple
-            tint: true
+            sprite: "bug_splash",
+            // tint: true
           }
         ];
 
@@ -237,13 +257,13 @@ export default function useGame() {
           const spawnPos = center().add(offset);
 
           // Scale 1.3 to 1.6 relative to 100px base SVG on 174px screen -> ~30% coverage
-          const targetScale = rand(0.15, 0.18);
+          const targetScale = rand(4, 5);
 
           const ink = add([
             sprite("ink_splat"),
             pos(spawnPos),
             anchor("center"),
-            scale(0),
+            scale(1),
             opacity(1),
             fixed(),
             z(200), // Very top
@@ -257,7 +277,7 @@ export default function useGame() {
           // State Machine for Ink
           ink.onUpdate(() => {
             if (ink.state === "grow") {
-              ink.scaleTo(ink.scale.x + dt() * 0.5);
+              ink.scaleTo(ink.scale.x + dt() * 10);
               if (ink.scale.x >= targetScale) {
                 ink.scaleTo(targetScale);
                 ink.state = "stay";
@@ -328,7 +348,16 @@ export default function useGame() {
           bug.play("idle");
 
           bug.onClick(() => {
-            addKaboom(bug.pos, { scale: 0.5 });
+            const c = add([
+              sprite("cloud"),
+              pos(bug.pos),
+              anchor("center"),
+              scale(0.4),
+              z(150),
+            ]);
+            c.play("idle");
+            c.onAnimEnd(() => c.destroy());
+
             score++;
             if (score % 50 === 0) play("score");
 
@@ -345,8 +374,7 @@ export default function useGame() {
             bug.onUpdate(() => {
               bug.move(0, bug.speed); // Straight down
 
-              bug.splasherTimer -= dt();
-              if (bug.splasherTimer <= 0) {
+              if (bug.pos.y > height()) {
                 triggerSquidInk();
                 bug.destroy();
               }
@@ -448,8 +476,18 @@ export default function useGame() {
           boss.play("idle");
           play("bomb_spawn", { volume: 0.1, speed: 0.5, detune: -50 });
 
+
           boss.onClick(() => {
-            addKaboom(boss.pos, { scale: 1.5 });
+            const c = add([
+              sprite("cloud"),
+              pos(boss.pos),
+              anchor("center"),
+              scale(0.5),
+              z(150),
+            ]);
+            c.play("idle");
+            c.onAnimEnd(() => c.destroy());
+
             score += 10;
             if (score % 50 === 0) play("score");
             play("bomb_mosquito", { volume: 0.4 });
@@ -561,7 +599,7 @@ export default function useGame() {
     }
   }, []);
 
-  return (<div className="w-dvw h-dvh flex items-center justify-center">
+  return (<div className="w-dvw h-dvh bg-black flex items-center justify-center">
     <div className="gnat-game-container" ref={canvasContainerRef}>
     </div>
     <SmoothCursor cursor={<div className="text-5xl -translate-y-5 -translate-x-5">

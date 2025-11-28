@@ -1,6 +1,7 @@
-export default function StarSeparator() {
+export default function StarSeparator(props: { id?: string }) {
   return (
     <img
+      id={props.id}
       alt="Estrela"
       loading="lazy"
       src="/assets/star.png"
