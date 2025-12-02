@@ -2,6 +2,7 @@
 
 import Game from "@/app/components/Game";
 import Contact from "@/app/components/sections/Contact";
+import Header from "@/app/components/sections/Header";
 import Profile from "@/app/components/sections/Profile";
 import Projects from "@/app/components/sections/Projects";
 import StarSeparator from "@/app/components/StarSeparator";
@@ -14,9 +15,7 @@ export default function Home() {
 
   return (
     <>
-      {/* <div className="fixed">
-        <AnimatedThemeToggler />
-      </div> */}
+      <Header />
       <Game />
 
       <main className="pt-20">

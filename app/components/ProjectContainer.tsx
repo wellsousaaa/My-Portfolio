@@ -68,7 +68,7 @@ export default function ProjectContainer({
           {links && links.map((link) => (
             <InteractiveHoverButton
               key={link.label}
-              className={cn("w-max", !mini && "sm:mr-4")}
+              className={cn("w-full md:w-max", !mini && "sm:mr-4")}
               onClick={(e) => {
                 e.preventDefault();
                 (e.currentTarget as HTMLElement)?.blur();

@@ -5,7 +5,6 @@ type UseGameProps = {
   scale: number;
 };
 
-
 export default function useGame({ canvasContainerRef, scale: SCALE }: UseGameProps) {
   const [initialized, setInitialized] = useState(false);
 
@@ -14,6 +13,8 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
   };
 
   useEffect(() => {
+    let observer: MutationObserver | null = null;
+
     const scrollSmoothTo = (hash: string) => {
       const element = document.getElementById(hash);
       if (element) {
@@ -25,18 +26,10 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
 
     const handleBlock = (i: number) => {
       switch (i) {
-        case 0:
-          scrollSmoothTo("profile");
-          break;
-        case 1:
-          scrollSmoothTo("projects");
-          break;
-        case 2:
-          // go to /game 
-          window.location.href = "/game";
-          break;
-        default:
-          break;
+        case 0: scrollSmoothTo("profile"); break;
+        case 1: scrollSmoothTo("projects"); break;
+        case 2: window.location.href = "/game"; break;
+        default: break;
       }
     }
 
@@ -72,27 +65,21 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
         rect,
         area,
         body,
-        color,
-        opacity,
         outline,
         rgb,
         onKeyDown,
         onKeyRelease,
         onKeyPress,
-        onUpdate,
-        dt,
-        isKeyDown,
-        clamp,
-        width,
-        height,
+        opacity,
         scale,
         anchor,
-
-        canvas: canvasInstance,
+        width,
+        height,
+        get,
       } = k;
 
       loadSprite("player", "/assets/well_sprites_v2.webp", {
-        sliceX: 11, // número máximo de frames horizontais (idle tem 11)
+        sliceX: 11,
         sliceY: 2,
         anims: {
           idle: { from: 0, to: 10, loop: true, speed: 6 },
@@ -102,16 +89,37 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
       });
 
       loadSprite("button", "/assets/plus.png");
-      loadSprite("background", "/assets/game-background-v2-v2.webp");
+
+      // Load both backgrounds
+      loadSprite("bg-light", "/assets/game-background-v2-v2.webp");
+      loadSprite("bg-dark", "/assets/bg-dark.jpg");
+
+      const isInitiallyDark = document.documentElement.classList.contains("dark");
+      const initialBg = isInitiallyDark ? "bg-dark" : "bg-light";
 
       for (let i = 0; i < window.innerWidth / 2 / 174; i++) {
-        add([sprite("background"), pos(i * 174, 0)]);
+        add([
+          sprite(initialBg),
+          pos(i * 174, 0),
+          "game-bg"
+        ]);
       }
 
-      // set gravity
+      // Observer to swap sprites
+      const updateBackground = () => {
+        const isDark = document.documentElement.classList.contains("dark");
+        const currentSprite = isDark ? "bg-dark" : "bg-light";
+
+        get("game-bg").forEach((bg) => {
+          bg.use(sprite(currentSprite));
+        });
+      };
+
+      observer = new MutationObserver(updateBackground);
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
       setGravity(1200);
 
-      // floor (static)
       add([
         rect(width(), 13),
         pos(0, height() - 13),
@@ -120,7 +128,6 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
         opacity(0),
       ]);
 
-      /// barriers
       add([
         rect(2, height()),
         pos(0, 0),
@@ -139,10 +146,8 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
       const buttonCount = 3;
       const idealSpacing = width() / (buttonCount + 1);
       const spacing = Math.min(idealSpacing, 50);
-
       const totalWidth = spacing * (buttonCount - 1);
       const startX = (width() - totalWidth) / 2;
-
       const buttonY = height() / 5.5;
 
       for (let i = 0; i < buttonCount; i++) {
@@ -152,35 +157,18 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
           outline(2, rgb(0, 0, 0)),
           pos(x, buttonY),
           area({ scale: 0.8 }),
-          // body({ isStatic: true }),
           sprite("button"),
-          scale(1),        // <-- required so we can animate scale later,
+          scale(1),
           anchor("center"),
           "menu-button",
-          {
-            index: i,
-          }
+          { index: i }
         ]);
 
-        // hover: scale up smoothly
-        button.onHover(() => {
-          button.scaleTo(1.15);   // grows by 15%
-        });
-
-        // hover end: scale back
-        button.onHoverEnd(() => {
-          button.scaleTo(1);      // return to normal
-        });
-
-        // click event
-        button.onClick(() => {
-          console.log(`Button ${i + 1} clicked!`);
-          handleBlock(i);
-        });
+        button.onHover(() => button.scaleTo(1.15));
+        button.onHoverEnd(() => button.scaleTo(1));
+        button.onClick(() => handleBlock(i));
       }
 
-
-      // player (dynamic)
       const player = add([
         pos(10, height() - 50),
         area(),
@@ -222,41 +210,18 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
         }
       });
 
-      player.onGround(() => {
-        player.play("idle");
-      });
+      player.onGround(() => player.play("idle"));
 
       player.onCollide("menu-button", (block) => {
-        console.log(block.index);
         handleBlock(block.index);
       });
-
     }
 
     init(getWidth());
 
-    // let resizeTimer: ReturnType<typeof setTimeout> | undefined;
-    // const handleResize = () => {
-    //   if (!canvasContainerRef) return;
-    //   canvasContainerRef.current.style.filter = "blur(10px)";
-    //   if (resizeTimer !== undefined) {
-    //     clearTimeout(resizeTimer);
-    //   }
-    //   resizeTimer = setTimeout(() => {
-    //     canvasContainerRef.current.innerHTML = "";
-    //     if (canvasContainerRef.current) init(getWidth());
-    //   }, 150);
-    // };
-
-    // if (typeof window !== "undefined" && canvasContainerRef?.current) {
-    //   window.addEventListener("resize", handleResize);
-    //   if (!initialized) init(getWidth());
-    // }
-
-    // return () => {
-    //   window.removeEventListener("resize", handleResize);
-    //   if (resizeTimer !== undefined) clearTimeout(resizeTimer);
-    // };
+    return () => {
+      if (observer) observer.disconnect();
+    };
   }, []);
 
   return null;

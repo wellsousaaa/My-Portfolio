@@ -85,7 +85,7 @@
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --foreground: #190031;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -118,15 +118,15 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
+  --background: #03001c;
+  --foreground: #b6eada;
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
+  --secondary: #301e67;
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
@@ -163,7 +163,7 @@
 .title-name {
   position: relative;
   width: fit-content;
-  background-color: #fff;
+  /* background-color: #fff; */
   /* margin-top: 5rem; */
 }
 
@@ -175,11 +175,11 @@
   top: -0.8rem;
   left: -0.3rem;
   /* left: -0.8rem; */
-  background: linear-gradient(
+  /* background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.2) 0%,
     rgba(255, 255, 255, 0) 100%
-  );
+  ); */
   pointer-events: none;
   text-transform: none;
 }
@@ -221,10 +221,6 @@
   }
 }
 
-body {
-  color: #190031;
-}
-
 @media screen and (min-width: 768px) {
   body {
     height: auto !important;
@@ -233,12 +229,12 @@ body {
   body > main {
     max-width: 90%;
     margin: auto !important;
-    border-left: 1px solid #d4dff3;
-    border-right: 1px solid #d4dff3;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
   }
 
   .game-section {
-    border-bottom: 1px solid #d4dff3;
+    border-bottom: 1px solid var(--border);
     max-height: 424px;
 
     background-size: 600px 600px;
@@ -291,15 +287,32 @@ body {
   mix-blend-mode: normal;
 }
 
-.game-section {
-  background: repeating-conic-gradient(#fff 0% 25%, #ececec 0% 50%);
-  background-size: 10px 10px; /* Size of each square */
+/* .game-section {
+  background: repeating-conic-gradient(
+    var(--background) 0% 25%,
+    var(--accent-foreground) 0% 50%
+  );
+  background-size: 10px 10px;
 
-  -webkit-box-shadow: 0 0 100px 50px #fff inset;
-  -moz-box-shadow: 0 0 100px 50px #fff inset;
-  box-shadow: 0 0 100px 50px #fff inset;
-}
+  -webkit-box-shadow: 0 0 100px 50px var(--background) inset;
+  -moz-box-shadow: 0 0 100px 50px var(--background) inset;
+  box-shadow: 0 0 100px 50px var(--background) inset;
+} */
 
 /* .game-section canvas {
   backdrop-filter: blur(10px);
 } */
+
+.header {
+  background: linear-gradient(#5b8fb9 0% 15%, transparent 15% 100%);
+}
+
+.header button {
+  padding: 0.5rem;
+  border-radius: 0px 0px 0.5rem 0.5rem;
+  background: #5b8fb9;
+
+  margin-right: 1vw;
+  color: #fff;
+  cursor: pointer;
+}

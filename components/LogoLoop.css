@@ -3,7 +3,6 @@
 
   --logoloop-gap: 32px;
   --logoloop-logoHeight: 28px;
-  --logoloop-fadeColorAuto: #ffffff;
 }
 
 .logoloop--vertical {
@@ -16,11 +15,11 @@
   padding-bottom: calc(var(--logoloop-logoHeight) * 0.1);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   .logoloop {
     --logoloop-fadeColorAuto: #0b0b0b;
   }
-}
+} */
 
 .logoloop__track {
   display: flex;
@@ -116,7 +115,7 @@
 
 .logoloop--fade::before,
 .logoloop--fade::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -129,7 +128,7 @@
   left: 0;
   background: linear-gradient(
     to right,
-    var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%,
+    var(--logoloop-fadeColor, var(--background)) 0%,
     rgba(0, 0, 0, 0) 100%
   );
 }
@@ -138,7 +137,7 @@
   right: 0;
   background: linear-gradient(
     to left,
-    var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%,
+    var(--logoloop-fadeColor, var(--background)) 0%,
     rgba(0, 0, 0, 0) 100%
   );
 }
@@ -156,7 +155,7 @@
   bottom: auto;
   background: linear-gradient(
     to bottom,
-    var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%,
+    var(--logoloop-fadeColor, var(--background)) 0%,
     rgba(0, 0, 0, 0) 100%
   );
 }
@@ -166,7 +165,7 @@
   top: auto;
   background: linear-gradient(
     to top,
-    var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%,
+    var(--logoloop-fadeColor, var(--background)) 0%,
     rgba(0, 0, 0, 0) 100%
   );
 }
