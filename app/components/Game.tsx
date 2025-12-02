@@ -12,12 +12,11 @@ export default function Game() {
 
   return (
     <>
-      <section className="game-section">
+      <section className="game-section overflow-hidden">
         <div
           className="overflow-hidden mx-auto"
           style={{
             minHeight: 106 * SCALE,
-            maxWidth: "90%",
           }}
           ref={canvasContainerRef}
         />

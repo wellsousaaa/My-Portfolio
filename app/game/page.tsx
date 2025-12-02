@@ -82,9 +82,9 @@ export default function useGame() {
       });
 
       loadSprite("spike", "/assets/spike.png", {
-        sliceX: 3,
+        sliceX: 4,
         anims: {
-          idle: { from: 0, to: 2, loop: true, speed: 12 },
+          idle: { from: 0, to: 3, loop: true, speed: 12 },
         },
       });
 
@@ -361,7 +361,10 @@ export default function useGame() {
             score++;
             if (score % 50 === 0) play("score");
 
-            play(`mosquito_${Math.floor(rand(1, 7))}`, { volume: 0.3 });
+            play(`mosquito_${Math.floor(rand(1, 7))}`, {
+              volume: 0.3,
+              speed: type.name === "splasher" ? 0.7 : 1.0
+            });
 
             scoreLabel.text = score.toString();
             curHealth = Math.min(curHealth + 2, maxHealth);
@@ -454,6 +457,75 @@ export default function useGame() {
             });
           }
         }
+
+        function spawnSpike() {
+          // Random position with padding
+          const posX = rand(30, width() - 30);
+          const posY = rand(30, height() - 30);
+
+          const s = add([
+            sprite("spike"),
+            pos(posX, posY),
+            anchor("center"),
+            area(),
+            scale(0), // Start invisible for pop-in
+            z(50),    // Draw above background but below bugs
+            "spike",
+            {
+              lifeTime: rand(2.5, 4.5), // Disappear after a few seconds
+            }
+          ]);
+
+          s.play("idle");
+
+          // Pop-in and Lifecycle animation
+          s.onUpdate(() => {
+            // Pop in
+            if (s.scale.x < 1) s.scaleTo(s.scale.x + dt() * 6);
+
+            // Timer logic
+            s.lifeTime -= dt();
+            if (s.lifeTime < 0.5) {
+              s.opacity = wave(0, 1, time() * 15); // Flicker before vanishing
+            }
+            if (s.lifeTime <= 0) s.destroy();
+          });
+
+          // Penalty on click
+          s.onClick(() => {
+            addKaboom(s.pos, { scale: 0.8 });
+            shake(10);
+            play("bomb_explode", { speed: 2, volume: 0.5 }); // Sharp explosion sound
+
+            // Decrement health directly
+            curHealth = Math.max(0, curHealth - 15);
+
+            // Visual feedback text
+            add([
+              text("-15", { size: 12, font: "monospace" }),
+              pos(s.pos),
+              color(255, 0, 0),
+              anchor("center"),
+              z(200),
+              opacity(1),
+              "damage_text"
+            ]);
+
+            s.destroy();
+          });
+        }
+
+        // Handle damage text movement
+        onUpdate("damage_text", (t) => {
+          t.pos.y -= dt() * 30;
+          t.opacity -= dt();
+          if (t.opacity <= 0) t.destroy();
+        });
+
+        // Spawn loop for spikes (less frequent than bugs)
+        loop(2.5, () => {
+          if (rand() < 0.5) spawnSpike(); // 50% chance every 2.5s
+        });
 
         // --- BOSS LOGIC ---
         function spawnBoss() {
@@ -602,10 +674,6 @@ export default function useGame() {
   return (<div className="w-dvw h-dvh bg-black flex items-center justify-center">
     <div className="gnat-game-container" ref={canvasContainerRef}>
     </div>
-    <SmoothCursor cursor={<div className="text-5xl -translate-y-5 -translate-x-5">
-      🤚
-    </div>}>
-
-    </SmoothCursor>
+    <SmoothCursor />
   </div>);
 }

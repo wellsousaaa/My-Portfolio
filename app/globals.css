@@ -244,6 +244,10 @@ body {
     background-size: 600px 600px;
     image-rendering: pixelated;
   }
+
+  .game-section > div {
+    max-width: 90%;
+  }
 }
 
 @media screen and (max-width: 769px) {
@@ -281,7 +285,21 @@ body {
   cursor: none !important;
 }
 
-::view-transition-old(root), ::view-transition-new(root) {
-    animation: none;
-    mix-blend-mode: normal;
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
+
+.game-section {
+  background: repeating-conic-gradient(#fff 0% 25%, #ececec 0% 50%);
+  background-size: 10px 10px; /* Size of each square */
+
+  -webkit-box-shadow: 0 0 100px 50px #fff inset;
+  -moz-box-shadow: 0 0 100px 50px #fff inset;
+  box-shadow: 0 0 100px 50px #fff inset;
+}
+
+/* .game-section canvas {
+  backdrop-filter: blur(10px);
+} */

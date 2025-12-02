@@ -233,28 +233,30 @@ export default function useGame({ canvasContainerRef, scale: SCALE }: UseGamePro
 
     }
 
-    let resizeTimer: ReturnType<typeof setTimeout> | undefined;
-    const handleResize = () => {
-      if (!canvasContainerRef) return;
-      canvasContainerRef.current.style.filter = "blur(10px)";
-      if (resizeTimer !== undefined) {
-        clearTimeout(resizeTimer);
-      }
-      resizeTimer = setTimeout(() => {
-        canvasContainerRef.current.innerHTML = "";
-        if (canvasContainerRef.current) init(getWidth());
-      }, 150);
-    };
+    init(getWidth());
 
-    if (typeof window !== "undefined" && canvasContainerRef?.current) {
-      window.addEventListener("resize", handleResize);
-      if (!initialized) init(getWidth());
-    }
+    // let resizeTimer: ReturnType<typeof setTimeout> | undefined;
+    // const handleResize = () => {
+    //   if (!canvasContainerRef) return;
+    //   canvasContainerRef.current.style.filter = "blur(10px)";
+    //   if (resizeTimer !== undefined) {
+    //     clearTimeout(resizeTimer);
+    //   }
+    //   resizeTimer = setTimeout(() => {
+    //     canvasContainerRef.current.innerHTML = "";
+    //     if (canvasContainerRef.current) init(getWidth());
+    //   }, 150);
+    // };
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      if (resizeTimer !== undefined) clearTimeout(resizeTimer);
-    };
+    // if (typeof window !== "undefined" && canvasContainerRef?.current) {
+    //   window.addEventListener("resize", handleResize);
+    //   if (!initialized) init(getWidth());
+    // }
+
+    // return () => {
+    //   window.removeEventListener("resize", handleResize);
+    //   if (resizeTimer !== undefined) clearTimeout(resizeTimer);
+    // };
   }, []);
 
   return null;
