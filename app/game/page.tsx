@@ -138,6 +138,17 @@ export default function useGame() {
       loadSound("bomb_explode", "/assets/audio/bomb_explode.wav");
       loadSound("bomb_spawn", "/assets/audio/bomb_spawn.wav");
 
+
+      loadSprite("error-bg", "/assets/error.png", {
+        sliceX: 51,
+        anims: {
+          idle: { from: 0, to: 50, loop: true, speed: 24 },
+        }
+      });
+
+
+      loadSprite("error-bg-2", "/assets/error.jpg");
+
       scene("game", () => {
         const bg = add([
           sprite("background"),
@@ -148,7 +159,7 @@ export default function useGame() {
         bg.play("idle");
 
         let maxHealth = 100;
-        let curHealth = 100;
+        let curHealth = 5;
         let score = 0;
         let startTime = time();
 
@@ -635,24 +646,34 @@ export default function useGame() {
       scene("lose", ({ score }: { score: number }) => {
         add([
           rect(width(), height()),
-          color(0, 0, 0),
+          color(35, 0, 0),
           opacity(0.8)
         ]);
-        add([
-          text("GAME OVER", { size: 16 }),
+
+        const gameOverBG = add([
+          opacity(0.8),
+          sprite("error-bg"),
           pos(center().sub(0, 20)),
           anchor("center"),
-          color(255, 0, 0)
         ]);
+
+        gameOverBG.play("idle");
+
+        // add([
+        //   text("GAME OVER", { size: 16 }),
+        //   pos(center().sub(0, 20)),
+        //   anchor("center"),
+        //   color(255, 0, 0)
+        // ]);
         add([
-          text(`Pontuação: ${score}`, { size: 12 }),
-          pos(center()),
+          text(`BUG_FIXED_COUNT=${score}`, { size: 12 }),
+          pos(center().add(0, 30)),
           anchor("center"),
           color(255, 255, 255)
         ]);
         add([
-          text("Space to Restart", { size: 8 }),
-          pos(center().add(0, 30)),
+          text("Aperte espaço para tentar novamente", { size: 8 }),
+          pos(center().add(0, 50)),
           anchor("center"),
           color(200, 200, 200),
           "blink"
