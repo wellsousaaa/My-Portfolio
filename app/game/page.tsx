@@ -172,6 +172,8 @@ export default function useGame() {
       loadSound("bomb_mosquito", "/assets/audio/bomb_mosquito.wav");
       loadSound("bomb_explode", "/assets/audio/bomb_explode.wav");
       loadSound("bomb_spawn", "/assets/audio/bomb_spawn.wav");
+      loadSound("music", "/assets/audio/bug.mp3");
+      loadSound("title", "/assets/audio/title.mp3");
 
 
       loadSprite("error-bg", "/assets/error.png", {
@@ -181,10 +183,15 @@ export default function useGame() {
         }
       });
 
+      let bgMusic;
+
 
       loadSprite("error-bg-2", "/assets/error.jpg");
+      const titleMusic = play("title", { loop: true, volume: 0.5 });
 
       scene("game", () => {
+        titleMusic.stop();
+
         const bg = add([
           sprite("background"),
           scale(0.7),
@@ -192,9 +199,10 @@ export default function useGame() {
           z(-10),
         ]);
         bg.play("idle");
+        bgMusic = play("music", { loop: true, volume: 0.8 });
 
         let maxHealth = 100;
-        let curHealth = 100;
+        let curHealth = 2;
         let score = 0;
         let startTime = time();
 
@@ -403,6 +411,10 @@ export default function useGame() {
             ]);
             c.play("idle");
             c.onAnimEnd(() => c.destroy());
+
+            bgMusic.speed += 0.0025;
+
+            console.log("SPEED: ", bgMusic.speed);
 
             score++;
             if (score % 50 === 0) play("score");
@@ -679,6 +691,10 @@ export default function useGame() {
       });
 
       scene("lose", ({ score }: { score: number }) => {
+        if (bgMusic) {
+          bgMusic.speed = 0.8;
+          bgMusic.volume = 0.2;
+        }
         add([
           rect(width(), height()),
           color(35, 0, 0),
@@ -718,7 +734,13 @@ export default function useGame() {
             "blink",
             area()
           ]);
-          tryAgain.onClick(() => go("game"));
+          tryAgain.onClick(() => {
+            go("game");
+            if (bgMusic) {
+              bgMusic.stop();
+              bgMusic = null;
+            }
+          });
         });
       });
 

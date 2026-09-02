@@ -3,7 +3,7 @@ import { SiInstagram, SiLinkedin, SiGithub, SiGmail } from "react-icons/si";
 const contactLinks = [
   {
     name: "Instagram",
-    url: "https://instagram.com/souwell.com_",
+    url: "https://instagram.com/souwell.com.br",
     icon: SiInstagram,
     color: "hover:text-pink-500",
   },
