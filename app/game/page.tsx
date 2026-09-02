@@ -202,7 +202,7 @@ export default function useGame() {
         bgMusic = play("music", { loop: true, volume: 0.8 });
 
         let maxHealth = 100;
-        let curHealth = 2;
+        let curHealth = 100;
         let score = 0;
         let startTime = time();
 
